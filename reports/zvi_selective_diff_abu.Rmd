@@ -1,0 +1,11 @@
+---
+title: Does the ZVI filter work in a selective or non-specific manner - Differential
+  Abundance?
+author: "Nate Olson"
+date: "12/15/2017"
+output: pdf_document
+---
+
+16S Differential abundance analysis - Using 16S data to look for OTUs enriched in ZVI and reclaimed water 
+OTU level differential abundance analysis
+Compare OTU list between edgeR and metagenomeSeq?

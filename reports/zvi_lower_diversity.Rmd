@@ -1,0 +1,11 @@
+---
+title: "Does ZVI lower microbial diversity?"
+author: "Nate Olson"
+date: "12/15/2017"
+output: pdf_document
+---
+
+Does the ZVI lower microbial diversity
+16S Alpha diversity analysis - compare the diversity between ZVI filtered and reclaimed water. 
+Test for differences using appropriate paired two sample test (may need to account for temporal sampling)
+Total abundance - if E. coli dominant, use E. coli MPN as abundance measurement

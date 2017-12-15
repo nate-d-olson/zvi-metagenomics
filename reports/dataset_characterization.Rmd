@@ -1,0 +1,10 @@
+---
+title: "Dataset Characterization"
+author: "Nate Olson"
+date: "12/15/2017"
+output: pdf_document
+---
+
+* Number of reads per sample
+* Number of OTUs per sample
+* Coverage estimates

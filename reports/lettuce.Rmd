@@ -1,0 +1,10 @@
+---
+title: "What is going from the water type to the respective irrigated lettuce type?"
+author: "Nate Olson"
+date: "12/15/2017"
+output: pdf_document
+---
+
+16S Beta diversity - How do the lettuce and water samples cluster?
+SourceTracker to determine the proportion of OTUs the water source
+Shotgun Pathogens - Are pathogens observed in the water source transferred to the lettuce?

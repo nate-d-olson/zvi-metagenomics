@@ -1,0 +1,10 @@
+---
+title: "Does the ZVI filter work in a selective or non-specific manner - Diversity?"
+author: "Nate Olson"
+date: "12/15/2017"
+output: pdf_document
+---
+
+Alpha diversity - evenness metric using shannon-better for 
+Beta diversity analysis  - Using 16S is the overall community composition different between ZVI and reclaimed water - expectation is that if ZVI works in a specific manner that composition will be different, though differences in sequencing depth may bias the results. 
+Test for differences using ANOSIM 

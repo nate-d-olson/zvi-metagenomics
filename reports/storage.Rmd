@@ -1,0 +1,9 @@
+---
+title: Did the reclaimed water collection and storage methods used in the study alter
+  the microbial community including pathogens?
+author: "Nate Olson"
+date: "12/15/2017"
+output: pdf_document
+---
+
+Analysis to be determined - use control samples to validate study assumptions and characterize source water variability.

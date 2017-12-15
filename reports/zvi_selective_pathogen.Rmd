@@ -1,0 +1,9 @@
+---
+title: "Does the ZVI filter work in a selective or non-specific manner - Pathogens"
+author: "Nate Olson"
+date: "12/15/2017"
+output: pdf_document
+---
+
+Are pathogens removed by the filter?
+Shotgun Pathogen - Using the shotgun metagenomic data compare differences in strains observed in the ZVI and reclaimed water. 
