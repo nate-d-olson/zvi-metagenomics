@@ -3,7 +3,14 @@ Here you'll store your raw data files. If they are encoded in a supported file f
 Store larger datafiles in appropriate formats to facilitate use, e.g. RDS for MRexperiments. 
 
 __Raw Data Files__
-* Provide brief description of each data file in this document.
+<!--
+Provide brief description of each data file in this document.
+-->
+* `otu_table_from_biom.txt`  
+* `otu_table_no_pynast_failures.biom` - OTU table in biom format
+* `rep_set.fna` - cluster center sequences 
+* `rep_set_aligned_pfiltered.tre` - phylogenetic tree of cluster center sequences in newick format  
+* `Summary_Taxa` - taxa level summaries in both biom and tsv format
 
 __Data Files__
 _Added_
