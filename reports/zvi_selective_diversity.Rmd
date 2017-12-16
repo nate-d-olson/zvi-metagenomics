@@ -1,10 +1,51 @@
 ---
 title: "Does the ZVI filter work in a selective or non-specific manner - Diversity?"
-author: "Nate Olson"
-date: "12/15/2017"
-output: pdf_document
+date: '`r Sys.Date()`'
+output:
+  bookdown::pdf_document2: 
+    toc: FALSE
 ---
 
+```{r setup, warning=FALSE, message = FALSE, echo = FALSE}
+library(tidyverse)
+library(git2r)
+library(devtools)
+library(knitr)
+## Load required data files 
+## dat <- readRDS("../data/input_data.RDS")
+```
+
+# Objective 
+
+# Approach  
 Alpha diversity - evenness metric using shannon-better for 
 Beta diversity analysis  - Using 16S is the overall community composition different between ZVI and reclaimed water - expectation is that if ZVI works in a specific manner that composition will be different, though differences in sequencing depth may bias the results. 
 Test for differences using ANOSIM 
+
+# Results  
+
+# Summary
+
+# Session information 
+
+## Git repo commit information
+```{r}
+repo <- repository(path = "../")
+last_commit <- commits(repo)[[1]]
+```
+
+The current git commit of this file is `r last_commit@sha`, which is on the `r branches(repo)[[1]]@name` branch and was made by `r last_commit@committer@name` on `r when(last_commit)`. The current commit message is `r last_commit@summary`. The repository is online at https://github.com/nate-d-olson/mgtst-pub  
+
+
+## Platform Information
+```{r}
+s_info <- devtools::session_info()
+print(s_info$platform)
+```
+
+
+## Package Versions
+```{r}
+s_info$packages %>% filter(`*` == "*") %>% select(-`*`) %>% 
+      knitr::kable()
+```

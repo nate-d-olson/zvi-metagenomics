@@ -1,10 +1,52 @@
 ---
 title: "What is going from the water type to the respective irrigated lettuce type?"
-author: "Nate Olson"
-date: "12/15/2017"
-output: pdf_document
+author: "TBD"
+date: '`r Sys.Date()`'
+output:
+  bookdown::pdf_document2: 
+    toc: FALSE
 ---
 
+```{r setup, warning=FALSE, message = FALSE, echo = FALSE}
+library(tidyverse)
+library(git2r)
+library(devtools)
+library(knitr)
+## Load required data files 
+## dat <- readRDS("../data/input_data.RDS")
+```
+
+# Objective 
+
+# Approach  
 16S Beta diversity - How do the lettuce and water samples cluster?
 SourceTracker to determine the proportion of OTUs the water source
 Shotgun Pathogens - Are pathogens observed in the water source transferred to the lettuce?
+
+# Results  
+
+# Summary
+
+# Session information 
+
+## Git repo commit information
+```{r}
+repo <- repository(path = "../")
+last_commit <- commits(repo)[[1]]
+```
+
+The current git commit of this file is `r last_commit@sha`, which is on the `r branches(repo)[[1]]@name` branch and was made by `r last_commit@committer@name` on `r when(last_commit)`. The current commit message is `r last_commit@summary`. The repository is online at https://github.com/nate-d-olson/mgtst-pub  
+
+
+## Platform Information
+```{r}
+s_info <- devtools::session_info()
+print(s_info$platform)
+```
+
+
+## Package Versions
+```{r}
+s_info$packages %>% filter(`*` == "*") %>% select(-`*`) %>% 
+      knitr::kable()
+```
