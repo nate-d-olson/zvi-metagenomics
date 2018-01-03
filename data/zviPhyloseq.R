@@ -3,6 +3,7 @@ biom_file <- "raw_data/otu_table_no_pynast_failures.biom"
 seq_file <- "raw_data/rep_set.fna"
 tree_file <- "raw_data/rep_set_aligned_pfiltered.tre"
 
+
 qiime_ps <- phyloseq::import_biom(biom_file)
 
 ## Need meta data 
