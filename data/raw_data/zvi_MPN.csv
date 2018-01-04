@@ -1,0 +1,28 @@
+Sample_ID,Sample_Type,Collection_Date,Volume,Units,MPN,95% CI LL,95% CI UL
+PK_RW_07-15-16,Reclaimed water,07/15/16,100,mL,0.71,0.1,5
+PK_RW_07-20-16,Reclaimed water,07/20/16,100,mL,2.3,0.66,8.1
+PK_RW_07-25-16,Reclaimed water,07/25/16,100,mL,0.36,0.051,2.5
+PK_RW_07-30-16,Reclaimed water,07/30/16,100,mL,<0.3,NA,NA
+PK_RW_08-04-16,Reclaimed water,08/04/16,100,mL,9.3,2.3,38
+PK_RW_08-09-16,Reclaimed water,08/09/16,100,mL,2.3,0.66,8.1
+PK_RW_08-14-16,Reclaimed water,08/14/16,100,mL,4.3,1,18
+PK_RW_08-19-16,Reclaimed water,08/19/16,100,mL,0.36,0.051,2.5
+PK_RW_08-24-16,Reclaimed water,08/24/16,100,mL,<0.3,NA,NA
+PK_ZW_07-15-16,ZVI filtered reclaimed water,07/15/16,100,mL,<0.6,0.1,5
+PK_ZW_07-20-16,ZVI filtered reclaimed water,07/20/16,100,mL,<0.3,0.051,2.5
+PK_ZW_07-25-16,ZVI filtered reclaimed water,07/25/16,100,mL,<0.3,0.051,2.5
+PK_ZW_07-30-16,ZVI filtered reclaimed water,07/30/16,100,mL,<0.3,NA,NA
+PK_ZW_08-04-16,ZVI filtered reclaimed water,08/04/16,100,mL,2.3,0.66,8.1
+PK_ZW_08-09-16,ZVI filtered reclaimed water,08/09/16,100,mL,2.3,0.66,8.1
+PK_ZW_08-14-16,ZVI filtered reclaimed water,08/14/16,100,mL,0.92,0.23,3.7
+PK_ZW_08-19-16,ZVI filtered reclaimed water,08/19/16,100,mL,<0.3,NA,NA
+PK_ZW_08-24-16,ZVI filtered reclaimed water,08/24/16,100,mL,<0.3,NA,NA
+PK_TW_07-15-16,Tap water,07/15/16,100,mL,<0.6,0.1,5
+PK_TW_07-20-16,Tap water,07/20/16,100,mL,<0.3,0.051,2.5
+PK_TW_07-25-16,Tap water,07/25/16,100,mL,<0.3,0.051,2.5
+PK_TW_07-30-16,Tap water,07/30/16,100,mL,<0.3,NA,NA
+PK_TW_08-04-16,Tap water,08/04/16,100,mL,<0.3,NA,NA
+PK_TW_08-09-16,Tap water,08/09/16,100,mL,<0.3,NA,NA
+PK_TW_08-14-16,Tap water,08/14/16,100,mL,<0.3,NA,NA
+PK_TW_08-19-16,Tap water,08/19/16,100,mL,<0.3,NA,NA
+PK_TW_08-24-16,Tap water,08/24/16,100,mL,<0.3,NA,NA
