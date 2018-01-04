@@ -1,0 +1,289 @@
+Sample_ID,Date_Collected,Sample_Type,Sample_Description,Experimental_Replicate,Amount,Units,DNA_Clean_up,Dilution_1_in_10,Reason,Include_in_analysis,Notes
+PK_RW_C_06-21-16,06/21/16,Water,Reclaimed Water,No,500,mL,Yes,No,Experiment,Yes,
+PK_RW_C_07-15-16,07/15/16,Water,Reclaimed Water,No,500,mL,Yes,No,Experiment,Yes,
+PK_RW_C_07-20-16,07/20/16,Water,Reclaimed Water,No,500,mL,Yes,No,Experiment,Yes,
+PK_RW_C_07-25-16,07/25/16,Water,Reclaimed Water,No,500,mL,Yes,No,Experiment,Yes,
+PK_RW_C_07-30-16,07/30/16,Water,Reclaimed Water,No,500,mL,Yes,No,Experiment,Yes,
+PK_RW_C_08-04-16,08/04/16,Water,Reclaimed Water,No,500,mL,Yes,No,Experiment,Yes,
+PK_RW_C_08-09-16,08/09/16,Water,Reclaimed Water,No,500,mL,Yes,No,Experiment,Yes,
+PK_RW_C_08-14-16,08/14/16,Water,Reclaimed Water,No,500,mL,Yes,No,Experiment,Yes,
+PK_RW_C_08-19-16,08/19/16,Water,Reclaimed Water,No,500,mL,Yes,No,Experiment,Yes,
+PK_RW_C_08-24-16,08/24/16,Water,Reclaimed Water,No,500,mL,Yes,No,Experiment,Yes,
+PK_ZW_C_06-21-16,06/21/16,Water,ZVI filtered reclaimed water,No,500,mL,Yes,No,Experiment,Yes,
+PK_ZW_C_07-15-16,07/15/16,Water,ZVI filtered reclaimed water,No,500,mL,Yes,No,Experiment,Yes,
+PK_ZW_C_07-20-16,07/20/16,Water,ZVI filtered reclaimed water,No,500,mL,Yes,No,Experiment,Yes,
+PK_ZW_C_07-25-16,07/25/16,Water,ZVI filtered reclaimed water,No,500,mL,Yes,No,Experiment,Yes,
+PK_ZW_C_07-30-16,07/30/16,Water,ZVI filtered reclaimed water,No,500,mL,Yes,No,Experiment,Yes,
+PK_ZW_C_08-04-16,08/04/16,Water,ZVI filtered reclaimed water,No,500,mL,Yes,No,Experiment,Yes,
+PK_ZW_C_08-09-16,08/09/16,Water,ZVI filtered reclaimed water,No,500,mL,Yes,No,Experiment,Yes,
+PK_ZW_C_08-14-16,08/14/16,Water,ZVI filtered reclaimed water,No,500,mL,Yes,No,Experiment,Yes,
+PK_ZW_C_08-19-16,08/19/16,Water,ZVI filtered reclaimed water,No,500,mL,Yes,No,Experiment,Yes,
+PK_ZW_C_08-24-16,08/24/16,Water,ZVI filtered reclaimed water,No,500,mL,Yes,No,Experiment,Yes,
+PK_TW_C_07-15-16,07/15/16,Water,Tap water,No,500,mL,Yes,No,Experiment,Yes,
+PK_TW_C_07-20-16,07/20/16,Water,Tap water,No,500,mL,Yes,No,Experiment,Yes,
+PK_TW_C_07-25-16,07/25/16,Water,Tap water,No,500,mL,Yes,No,Experiment,Yes,
+PK_TW_C_07-30-16,07/30/16,Water,Tap water,No,500,mL,Yes,No,Experiment,Yes,
+PK_TW_C_08-04-16,08/04/16,Water,Tap water,No,500,mL,Yes,No,Experiment,Yes,
+PK_TW_C_08-09-16,08/09/16,Water,Tap water,No,500,mL,Yes,No,Experiment,Yes,
+PK_TW_C_08-14-16,08/14/16,Water,Tap water,No,500,mL,Yes,No,Experiment,Yes,
+PK_TW_C_08-19-16,08/19/16,Water,Tap water,No,500,mL,Yes,No,Experiment,Yes,
+PK_TW_C_08-24-16,08/24/16,Water,Tap water,No,500,mL,Yes,No,Experiment,Yes,
+PK_TP_C_07-05-16,07/05/16,Water,Chlorinated Effluent,No,500,mL,Yes,No,Experiment,Yes,"Change ""TP"" to ""CE"" "
+PK_TP_C_07-19-16,07/19/16,Water,Chlorinated Effluent,No,500,mL,Yes,No,Experiment,Yes,"Change ""TP"" to ""CE"" "
+PK_TP_C_08-02-16,08/02/16,Water,Chlorinated Effluent,No,500,mL,Yes,No,Experiment,Yes,"Change ""TP"" to ""CE"" "
+PK_TP_C_08-16-16,08/16/16,Water,Chlorinated Effluent,No,500,mL,Yes,No,Experiment,Yes,"Change ""TP"" to ""CE"" "
+PK_RB_C_07-05-16,07/05/16,Water,Rain Barrel Composite,No,500,mL,Yes,No,Experiment,Yes,
+PK_RB_C_07-19-16,07/19/16,Water,Rain Barrel Composite,No,500,mL,Yes,No,Experiment,Yes,
+PK_RB_C_08-02-16,08/02/16,Water,Rain Barrel Composite,No,500,mL,Yes,No,Experiment,Yes,
+PK_RW_U_07-25-16,07/25/16,Water,Reclaimed Water,No,500,mL,No,No,Exploration,No,Was included to see if DNA clean up made a difference
+PK_RW_U_08-14-16,08/04/16,Water,Reclaimed Water,No,500,mL,No,No,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZW_U_07-25-16,07/25/16,Water,ZVI filtered reclaimed water,No,500,mL,No,No,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZW_U_08-14-16,08/04/16,Water,ZVI filtered reclaimed water,No,500,mL,No,No,Exploration,No,Was included to see if DNA clean up made a difference
+PK_TW_U_07-25-16,07/25/16,Water,Tap water,No,500,mL,No,No,Exploration,No,Was included to see if DNA clean up made a difference
+PK_TW_U_08-14-16,08/04/16,Water,Tap water,No,500,mL,No,No,Exploration,No,Was included to see if DNA clean up made a difference
+PK_BL_D_07-15-16_R1,07/15/17,Lettuce,Prior to any type of irrigation,Replicate 1,0.2,grams,No,Yes,Background,Not sure,"Was included to get an idea about background community before irrigation began in case we see something ""weird"" in our experimental samples we can look at the background samples to see where it could have come from"
+PK_BL_D_07-15-16_R2,07/15/17,Lettuce,Prior to any type of irrigation,Replicate 2,0.2,grams,No,Yes,Background,Not sure,"Was included to get an idea about background community before irrigation began in case we see something ""weird"" in our experimental samples we can look at the background samples to see where it could have come from"
+PK_RL_D_07-25-16_R1,07/25/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_07-25-16_R2,07/25/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_07-26-16_R1,07/26/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_07-26-16_R2,07/26/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_07-27-16_R1,07/27/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_07-27-16_R2,07/27/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_07-28-16_R1,07/28/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_07-28-16_R2,07/28/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_07-29-16_R1,07/29/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_07-29-16_R2,07/29/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_07-30-16_R1,07/30/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_07-30-16_R2,07/30/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_07-31-16_R1,07/31/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_07-31-16_R2,07/31/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-01-16_R1,08/01/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-01-16_R2,08/01/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-03-16_R1,08/03/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-03-16_R2,08/03/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-04-16_R1,08/04/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-04-16_R2,08/04/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-05-16_R1,08/05/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-05-16_R2,08/05/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-06-16_R1,08/06/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-06-16_R2,08/06/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-08-16_R1,08/08/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-08-16_R2,08/08/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-09-16_R1,08/09/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-09-16_R2,08/09/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-10-16_R1,08/10/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-10-16_R2,08/10/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-11-16_R1,08/11/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-11-16_R2,08/11/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-13-16_R1,08/13/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-13-16_R2,08/13/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-14-16_R1,08/14/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-14-16_R2,08/14/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-15-16_R1,08/15/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-15-16_R2,08/15/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-16-16_R1,08/16/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-16-16_R2,08/16/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-18-16_R1,08/18/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-18-16_R2,08/18/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-19-16_R1,08/19/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-19-16_R2,08/19/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-20-16_R1,08/20/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-20-16_R2,08/20/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-21-16_R1,08/21/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-21-16_R2,08/21/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-23-16_R1,08/23/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-23-16_R2,08/23/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-24-16_R1,08/24/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_D_08-24-16_R2,08/24/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_07-25-16_R1,07/25/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_07-25-16_R2,07/25/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_07-26-16_R1,07/26/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_07-26-16_R2,07/26/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_07-27-16_R1,07/27/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_07-27-16_R2,07/27/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_07-28-16_R1,07/28/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_07-28-16_R2,07/28/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_07-29-16_R1,07/29/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_07-29-16_R2,07/29/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_07-30-16_R1,07/30/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_07-30-16_R2,07/30/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_07-31-16_R1,07/31/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_07-31-16_R2,07/31/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-01-16_R1,08/01/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-01-16_R2,08/01/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-03-16_R1,08/03/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-03-16_R2,08/03/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-04-16_R1,08/04/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-04-16_R2,08/04/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-05-16_R1,08/05/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-05-16_R2,08/05/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-06-16_R1,08/06/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-06-16_R2,08/06/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-08-16_R1,08/08/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-08-16_R2,08/08/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-09-16_R1,08/09/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-09-16_R2,08/09/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-10-16_R1,08/10/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-10-16_R2,08/10/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-11-16_R1,08/11/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-11-16_R2,08/11/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-13-16_R1,08/13/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-13-16_R2,08/13/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-14-16_R1,08/14/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-14-16_R2,08/14/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-15-16_R1,08/15/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-15-16_R2,08/15/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-16-16_R1,08/16/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-16-16_R2,08/16/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-18-16_R1,08/18/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-18-16_R2,08/18/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-19-16_R1,08/19/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-19-16_R2,08/19/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-20-16_R1,08/20/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-20-16_R2,08/20/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-21-16_R1,08/21/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-21-16_R2,08/21/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-23-16_R1,08/23/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-23-16_R2,08/23/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-24-16_R1,08/24/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZL_D_08-24-16_R2,08/24/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_07-25-16_R1,07/25/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_07-25-16_R2,07/25/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_07-26-16_R1,07/26/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_07-26-16_R2,07/26/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_07-27-16_R1,07/27/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_07-27-16_R2,07/27/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_07-28-16_R1,07/28/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_07-28-16_R2,07/28/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_07-29-16_R1,07/29/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_07-29-16_R2,07/29/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_07-30-16_R1,07/30/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_07-30-16_R2,07/30/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_07-31-16_R1,07/31/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_07-31-16_R2,07/31/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-01-16_R1,08/01/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-01-16_R2,08/01/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-03-16_R1,08/03/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-03-16_R2,08/03/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-04-16_R1,08/04/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-04-16_R2,08/04/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-05-16_R1,08/05/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-05-16_R2,08/05/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-06-16_R1,08/06/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-06-16_R2,08/06/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-08-16_R1,08/08/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-08-16_R2,08/08/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-09-16_R1,08/09/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-09-16_R2,08/09/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-10-16_R1,08/10/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-10-16_R2,08/10/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-11-16_R1,08/11/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-11-16_R2,08/11/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-13-16_R1,08/13/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-13-16_R2,08/13/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-14-16_R1,08/14/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-14-16_R2,08/14/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-15-16_R1,08/15/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-15-16_R2,08/15/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-16-16_R1,08/16/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-16-16_R2,08/16/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-18-16_R1,08/18/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-18-16_R2,08/18/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-19-16_R1,08/19/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-19-16_R2,08/19/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-20-16_R1,08/20/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-20-16_R2,08/20/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-21-16_R1,08/21/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-21-16_R2,08/21/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-23-16_R1,08/23/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-23-16_R2,08/23/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-24-16_R1,08/24/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TL_D_08-24-16_R2,08/24/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RL_C_07-25-16_R1,07/25/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_RL_C_07-25-16_R2,07/27/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_RL_C_08-19-16_R1,08/19/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_RL_C_08-19-16_R2,08/19/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZL_C_07-25-16_R1,07/25/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water ,Replicate 1,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZL_C_07-25-16_R2,07/25/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water ,Replicate 2,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZL_C_07-27-16_R1,07/27/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water ,Replicate 1,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZL_C_07-27-16_R2,07/27/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water ,Replicate 2,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZL_C_08-06-16_R1,08/06/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water ,Replicate 1,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZL_C_08-06-16_R2,08/06/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water ,Replicate 2,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZL_C_08-14-16_R1,08/14/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water ,Replicate 1,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZL_C_08-14-16_R2,08/14/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water ,Replicate 2,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZL_C_08-16-16_R1,08/16/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water ,Replicate 1,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZL_C_08-16-16_R2,08/16/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water ,Replicate 2,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZL_C_08-19-16_R1,08/19/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water ,Replicate 1,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZL_C_08-19-16_R2,08/19/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water ,Replicate 2,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZL_C_08-20-16_R1,08/20/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water ,Replicate 1,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZL_C_08-20-16_R2,08/20/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water ,Replicate 2,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZL_C_08-21-16_R1,08/21/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water ,Replicate 1,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZL_C_08-21-16_R2,08/21/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water ,Replicate 2,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_TL_C_08-16-16_R1,08/16/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_TL_C_08-16-16_R2,08/16/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_TL_C_08-19-16_R1,08/19/16,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_TL_C_08-19-16_R2,08/19/16,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_RL_C_08-04-16_R1,08/04/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 1,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_RL_C_08-11-16_R1,08/11/17,Lettuce,Lettuce irrigated with reclaimed water,Replicate 2,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZL_C_08-04-16_R1,08/04/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water ,Replicate 1,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_ZL_C_08-11-16_R1,08/11/17,Lettuce,Lettuce irrigated with ZVI filtered reclaimed water ,Replicate 2,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_TL_C_08-04-16_R1,08/04/17,Lettuce,Lettuce irrigated with tap water,Replicate 1,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_TL_C_08-11-16_R1,08/11/17,Lettuce,Lettuce irrigated with tap water,Replicate 2,0.2,grams,Yes,Yes,Exploration,No,Was included to see if DNA clean up made a difference
+PK_BS_D_07-01-16_R1,07/01/17,Soil,Soil in which seeds were planted,Replicate 1,0.2,grams,No,Yes,Background,Not sure,"Was included to get an idea about background community before irrigation began. In case we see something ""weird"" in our experimental samples so we can look at the background samples to see where it could have come from"
+PK_BS_D_07-01-16_R2,07/01/17,Soil,Soil in which seeds were planted,Replicate 2,0.2,grams,No,Yes,Background,Not sure,"Was included to get an idea about background community before irrigation began. In case we see something ""weird"" in our experimental samples so we can look at the background samples to see where it could have come from"
+PK_BS_D_07-15-16_R1,07/15/17,Soil,Soil in which transplants were planted,Replicate 1,0.2,grams,No,Yes,Background,Not sure,"Was included to get an idea about background community before irrigation began. In case we see something ""weird"" in our experimental samples so we can look at the background samples to see where it could have come from"
+PK_BS_D_07-15-16_R2,07/15/17,Soil,Soil in which transplants were planted,Replicate 2,0.2,grams,No,Yes,Background,Not sure,"Was included to get an idea about background community before irrigation began. In case we see something ""weird"" in our experimental samples so we can look at the background samples to see where it could have come from"
+PK_BF_D_07-15-16_R1,07/15/17,Fertilizer,Fertilizer added to soil,Replicate 1,0.2,grams,No,Yes,Background,Not sure,"Was included to get an idea about background community before irrigation began. In case we see something ""weird"" in our experimental samples so we can look at the background samples to see where it could have come from"
+PK_BF_D_07-15-16_R2,07/15/17,Soil,Fertilizer added to soil,Replicate 2,0.2,grams,No,Yes,Background,Not sure,"Was included to get an idea about background community before irrigation began. In case we see something ""weird"" in our experimental samples so we can look at the background samples to see where it could have come from"
+PK_RS_D_08-02-16_R1,08/02/17,Soil,Soil from plants irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RS_D_08-02-16_R2,08/02/17,Soil,Soil from plants irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_RS_D_08-24-16_R1,08/24/17,Soil,Soil from plants irrigated with reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_RS_D_08-24-16_R2,08/24/17,Soil,Soil from plants irrigated with reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZS_D_08-02-16_R1,08/02/17,Soil,Soil from plants irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZS_D_08-02-16_R2,08/02/17,Soil,Soil from plants irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZS_D_08-24-16_R1,08/24/17,Soil,Soil from plants irrigated with ZVI filtered reclaimed water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZS_D_08-24-16_R2,08/24/17,Soil,Soil from plants irrigated with ZVI filtered reclaimed water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TS_D_08-02-16_R1,08/02/17,Soil,Soil from plants irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TS_D_08-02-16_R2,08/02/17,Soil,Soil from plants irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_TS_D_08-24-16_R1,08/24/17,Soil,Soil from plants irrigated with tap water,Replicate 1,0.2,grams,No,Yes,Experiment,Yes,
+PK_TS_D_08-24-16_R2,08/24/17,Soil,Soil from plants irrigated with tap water,Replicate 2,0.2,grams,No,Yes,Experiment,Yes,
+PK_ZNR_03-31-16,03/31/16,Water,Prefiltration ZVI rinse with Nanopure Water,No,500,mL,No,No,Experiment,Yes,
+PK_ZNR_05-16-16,05/16/16,Water,Prefiltration ZVI rinse with Nanopure Water,No,500,mL,No,No,Experiment,Yes,
+PK_ZNR_06-07-16,06/07/16,Water,Prefiltration ZVI rinse with Nanopure Water,No,500,mL,No,No,Experiment,Yes,
+PK_D4M_08-10-16,08/10/16,Water,Water from Misters in room D4 of the greenhouse,No,500,mL,No,No,Background,Not sure,"Was included to see contribution of misters to lettuce community in case we see something ""weird"" in our lettuce samples we know where it may have come from. "
+PK_D4M_08-22-16,08/22/16,Water,Water from Misters in room D4 of the greenhouse ,No,500,mL,No,No,Background,Not sure,"Was included to see contribution of misters to lettuce community in case we see something ""weird"" in our lettuce samples we know where it may have come from. "
+PK_D4M_09-06-16,09/06/16,Water,Water from Misters in room D4 of the greenhouse,No,500,mL,No,No,Background,Not sure,"Was included to see contribution of misters to lettuce community in case we see something ""weird"" in our lettuce samples we know where it may have come from. "
+PK_B1M_08-22-16,08/22/16,Water,Water from mister in room B4,No,500,mL,No,No,Background,Not sure,"Was included to see contribution of misters to lettuce community in case we see something ""weird"" in our lettuce samples we know where it may have come from. "
+PK_ZSS_07-16-16,07/16/16,Swabs,Swabs from inside sprayer that held ZVI filtered reclaimed water,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of sprayers to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_ZSS_08-04-16,08/04/16,Swabs,Swabs from inside sprayer that held ZVI filtered reclaimed water,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of sprayers to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_ZSS_08-24-16,08/24/16,Swabs,Swabs from inside sprayer that held ZVI filtered reclaimed water,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of sprayers to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_RSS_07-16-16,07/16/16,Swabs,Swabs from inside sprayer that held reclaimed water,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of sprayers to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_RSS_08-04-16,08/04/16,Swabs,Swabs from inside sprayer that held reclaimed water,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of sprayers to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_RSS_08-24-16,08/24/16,Swabs,Swabs from inside sprayer that held reclaimed water,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of sprayers to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_TSS_07-16-16,07/16/16,Swabs,Swabs from inside sprayer that  held tap water,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of sprayers to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_TSS_08-04-16,08/04/16,Swabs,Swabs from inside sprayer that  held tap water,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of sprayers to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_TSS_08-24-16,08/24/16,Swabs,Swabs from inside sprayer that  held tap water,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of sprayers to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_ZFS_06-21-16,06/21/16,Swabs,Swabs from inside the ZVI filter including spigot,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of unsubmerged/exposed areas of ZVI filter to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_ZFS_08-04-16,08/04/16,Swabs,Swabs from inside the ZVI filter including spigot,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of unsubmerged/exposed areas of ZVI filter to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_ZFS_08-24-16,08/24/16,Swabs,Swabs from inside the ZVI filter including spigot,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of unsubmerged/exposed areas of ZVI filter to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_GTS_07-16-16,07/16/16,Swabs,Swabs from inside greenhouse spigot that dispensed tap water,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of tap in the greenhouse to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_GTS_08-04-16,08/04/16,Swabs,Swabs from inside greenhouse spigot that dispensed tap water,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of tap in the greenhouse to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_GTS_08-24-16,08/24/16,Swabs,Swabs from inside greenhouse spigot that dispensed tap water,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of tap in the greenhouse to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_RB1S_06-21-16,06/21/16,Swabs,Swabs from inside Rain Barrel 1,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of the rain barrels  to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_RB2S_06-21-16,06/21/16,Swabs,Swabs from inside Rain Barrel 2,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of the rain barrels  to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_RB3S_06-21-16,06/21/16,Swabs,Swabs from inside Rain Barrel 1,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of the rain barrels  to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_RB4S_07-20-16,07/20/16,Swabs,Swabs from inside Rain Barrel 4,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of the rain barrels  to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_RB1S_08-04-16,08/04/16,Swabs,Swabs from inside Rain Barrel 1,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of the rain barrels  to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_RB3S_08-04-16,08/04/16,Swabs,Swabs from inside Rain Barrel 3,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of the rain barrels  to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_RB4S_08-04-16,08/04/16,Swabs,Swabs from inside Rain Barrel 4,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of the rain barrels  to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_RB1S_08-24-16,08/24/16,Swabs,Swabs from inside Rain Barrel 1,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of the rain barrels  to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_RB3S_08-24-16,08/24/16,Swabs,Swabs from inside Rain Barrel 3,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of the rain barrels  to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_RB4S_08-24-16,08/24/16,Swabs,Swabs from inside Rain Barrel 4,No,NA,NA,No,No,Background,Not sure,"Was included to see contribution of the rain barrels  to the community in case we see something ""weird"" in our samples we know where it may have come from. "
+PK_CNC_01,n/a,Water,Clean up kit negative control. Molecular grade water ,No,100,ul,No,No,Negative Control,Not sure,see contribution of clean up kit
+PK_CNC_02,n/a,Water,Clean up kit negative control. Molecular grade water ,No,100,ul,No,No,Negative Control,Not sure,see contribution of clean up kit
+PK_FNC_01,06/21/16,Water,Filtration negative control Molecular grade water,No,500,mL,No,No,Negative Control,Not sure,see contribution of filtration manifold
+PK_FNC_02,07/05/16,Water,Filtration negative control Molecular grade water,No,500,mL,No,No,Negative Control,Not sure,see contribution of filtration manifold
+PK_ENC_01,01/18/17,Water,Extraction negative control. Molecular grade water,No,1,mL,No,No,Negative Control,Not sure,see contribution of extraction reagents
+PK_ENC_02,01/19/17,Water,Extraction negative control. Molecular grade water,No,1,mL,No,No,Negative Control,Not sure,see contribution of extraction reagents
+PK_MWC_01,n/a,Water,Control for 96 well plate,No,27,ul,No,No,Negative Control,Not sure,control for sequencing plate
+PK_MWC_02,n/a,Water,Control for 96 well plate,No,27,ul,No,No,Negative Control,Not sure,control for sequencing plate
