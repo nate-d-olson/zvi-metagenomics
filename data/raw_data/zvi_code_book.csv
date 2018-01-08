@@ -1,0 +1,29 @@
+Sample_ID,Sample Name
+Sample_Code,Sample Code
+Collection_Date,Date the sample was collected
+Sample_Type,Type of sample
+Replicate_Number,Replicate Number 1 or 2
+Day_aft_Irrigation,The number of days after irrigation was the sample collected
+Sample_Description,Detailed description of the sample
+Experimental_Replicate,Was the sample a replicate or not
+Amount,Volume/ weight of sample
+Units,Units of volume/weight
+DNA_Clean_up,Was further DNA Clean-up performed
+Dilution_1_in_10,This indicates that the sample sequenced was diluted 10-fold
+Reason,Reason for inclusion in sequencing run
+Include_in_analysis,Should this sample be included in the data analysis or not
+RW,Reclaimed Water
+ZW,ZVI-filtered reclaimed water
+TW,Tap water
+CE,Chlorinated Effluent
+RB,Rain Barrel Composite
+NI,Do Not Include in data analysis
+BG,Background
+RL,Reclaimed water irrigated lettuce composite. All plants included in each group were irrigated. Foliar samples taken from each plant and combined. 0.2 gram sample taken from this composite.
+ZL,ZVI-filtered reclaimed water irrigated lettuce. All plants included in each group were irrigated. Foliar samples taken from each plant and combined. 0.2 gram sample taken from this composite.
+TL,. All plants included in each group were irrigated. Foliar samples taken from each plant and combined. 0.2 gram sample taken from this composite.Tap water irrigated lettuce
+RS,Soil composite from reclaimed water irrigated lettuce plants. 
+ZS,Soil composite from Zvfiltered reclaimed water irrigated lettuce plants
+TS,Soil composite from tap water irrigated lettuce plants
+NR,Nanopure rinse of ZVI filter prior to start of experiment
+NC,Negative Control
