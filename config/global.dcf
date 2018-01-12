@@ -7,8 +7,8 @@ recursive_loading: FALSE
 munging: TRUE
 logging: FALSE
 logging_level: INFO
-load_libraries: FALSE
-libraries: tidyverse, stringr, forcats
+load_libraries: TRUE
+libraries: tidyverse, stringr, forcats, phyloseq
 as_factors: TRUE
 data_tables: FALSE
 attach_internal_libraries: FALSE

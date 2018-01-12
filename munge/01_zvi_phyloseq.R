@@ -3,10 +3,6 @@
 
 library(ape)
 library(Biostrings)
-library(phyloseq)
-library(tidyverse)
-library(stringr)
-
 
 ### Source data file names
 biom_file <- "data/raw_data/otu_table_no_pynast_failures.biom"
