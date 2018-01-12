@@ -24,6 +24,25 @@ Test for differences using ANOSIM
 
 # Results  
 
+## Beta diversity
+Perform same analysis for the four different diversity metrics
+1. using phyloseq object
+2. select samples of interest  
+select_sample(ps, samples_to_keep)
+
+3. calculate distance 
+Example code 
+dist_mat <- distance(ps, method = i)
+
+4. plot ordination
+Example code 
+ord <- ordinate(ps, method = "PCoA", distance = dist_mat)
+
+plot_ordination(ps, ord, color= "Stage", title = "Bray Curtis PCoA") + theme_bw() + stat_ellipse()
+
+5. use distance calculations for ANOSIM
+anosim(dist_mat, grouping = factor(ps@sam_data$sample_code))
+
 # Summary
 
 # Session information 
