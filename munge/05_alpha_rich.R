@@ -1,1 +1,0 @@
-# Alpha diversity richness estimates - all samples

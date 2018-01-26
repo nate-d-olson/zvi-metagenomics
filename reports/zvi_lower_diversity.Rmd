@@ -1,6 +1,6 @@
 ---
 title: "Does ZVI lower microbial diversity?"
-author: "TBD"
+author: "Nate"
 date: '`r Sys.Date()`'
 output:
   bookdown::pdf_document2: 
@@ -12,21 +12,63 @@ library(tidyverse)
 library(git2r)
 library(devtools)
 library(knitr)
+library(breakaway)
 ## Load required data files 
-## dat <- readRDS("../data/input_data.RDS")
+meta_df <- read_csv("../data/raw_data/zvi_meta.csv")
+load("../cache/richness_df.RData")
 ```
 
 # Objective 
+Determine if ZVI filtration lowers microbial diversity.
 
 # Approach  
-Does the ZVI lower microbial diversity
-16S Alpha diversity analysis - compare the diversity between ZVI filtered and reclaimed water. 
+
+- 16S Alpha diversity analysis - compare the diversity between ZVI filtered and reclaimed water. 
 Test for differences using appropriate paired two sample test (may need to account for temporal sampling)
-Total abundance - if E. coli dominant, use E. coli MPN as abundance measurement
+
+- Total abundance - if E. coli dominant, use E. coli MPN as abundance measurement
 
 # Results  
 
+### Alpha Diversity Analysis 
+
+```{r rwZwAlphaTidy, echo = FALSE, message = FALSE}
+richness_df <- richness_df %>% 
+    rename(Sample_ID = sample_id) %>% 
+    right_join(meta_df)
+rw_v_zw <- richness_df %>% filter(Sample_Code %in% c("RW","ZW"))
+```
+
+```{r rwZwAlphaPlot, fig.cap = "Comparison of richness estimates between samples collected before and after ZVI filtration, RW and ZW sample types respectively."}
+ggplot(rw_v_zw) + 
+    geom_pointrange(aes(x = Sample_Code, y = est, 
+                        ymin = lower, ymax = upper)) +
+    scale_y_log10() + 
+    theme_bw() + facet_wrap(~Collection_Date) + 
+    labs(y = "Richness Estimate", x = "Sample Type")
+```
+
+### Alpha Diversity Significance Test
+```{r rwZwAlphaStats}
+sample_code <- rw_v_zw$Sample_Code
+
+design_mat <- model.matrix(~ sample_code + 1)
+
+colnames(design_mat) <- colnames(design_mat) %>% str_replace("sample_code","")
+rw_v_zw_betta <- betta_random(chats = rw_v_zw$est, ses = rw_v_zw$seest, 
+                              X = design_mat, groups = rw_v_zw$Collection_Date)
+rw_rich <- rw_v_zw_betta$table[1,1] %>% round(0)
+rw_se <- rw_v_zw_betta$table[1,2] %>% round(0)
+zw_rich <- rw_rich + rw_v_zw_betta$table[2,1] %>% round(0)
+zw_se <- rw_v_zw_betta$table[2,2] %>% round(0)
+p_val <- rw_v_zw_betta$table[2,3]
+rw_v_zw_betta$table
+```
+
 # Summary
+Using breakaway betta model to test for differences in richness in samples collected before and after ZVI filtration. 
+The `betta_random` model was used to account for paired samples with collection date as a random effect. 
+While richness decreased after ZVI filtration (RW - `r rw_rich` $\pm$ `r rw_se`, ZW - `r zw_rich` $\pm$ `r zw_se` ), the change in richeness was not statistically significant, p = `r p_val`.
 
 # Session information 
 
