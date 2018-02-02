@@ -8,27 +8,24 @@ output:
     toc: yes
     toc_float: yes
 ---
-```{r}
-knitr::opts_chunk$set(echo=TRUE)
-```
 
-
-```{r message=FALSE, warning = FALSE, echo = FALSE}
+```{r message = FALSE, warning = FALSE, echo = FALSE}
 library(knitr)
 library(phyloseq)
-library(ggplot2)
 library(ggpubr)
-library(magrittr)
-opts_chunk$set(cache=TRUE, message=FALSE, warning = FALSE, echo = FALSE)
+library(tidyverse)
+opts_chunk$set(cache = TRUE, message = FALSE, warning = FALSE, echo = FALSE)
 ```
 
 
 ```{r}
 # Load phyloseq object (ZVI phyloseq Object "zpo")
-zpo = readRDS("phyloseq.RDS")
+zpo <- readRDS("phyloseq.RDS")
+
+zpo <- prune_taxa(zpo, Rank6 != "Cyanobacteria")  
 
 # Subset phyloseq object so that only RW, ZW, TW, RL, ZL and TL are included
-zpo1 = subset_samples(zpo, Sample_Code != "NI" & Sample_Code != "BG" & Sample_Code != "NC" & Sample_Code != "NR" & Sample_Code != "CE" & Sample_Code !="RB" & Sample_Code != "RS"& Sample_Code != "ZS"& Sample_Code != "TS")
+zpo1 <- subset_samples(zpo, Sample_Code %in% c("RW","ZW","TW","RL","ZL","TL"))
 
 # Subset phyloseq object so that only water samples RW and ZW are included
 zpo2 = subset_samples(zpo, Sample_Code != "NI" & Sample_Code != "BG" & Sample_Code != "NR" & Sample_Code !="TW" & Sample_Code != "NC" & Sample_Code != "RL"& Sample_Code != "ZL"& Sample_Code != "TL" & Sample_Code != "RS"& Sample_Code != "ZS"& Sample_Code != "TS" & Sample_Code !="CE" & Sample_Code !="RB")
@@ -44,12 +41,16 @@ zpo5 = subset_samples(zpo, Sample_Code != "NI" & Sample_Code != "BG" & Sample_Co
 
 
 # Set up variable for downstream analysis
+zvi_ps_list <- list(all_exp = zpo1, 
+                    rw_v_zw = zpo2, 
+                    lettuce = zpo3, 
+                    kitchen_sink = zpo4, 
+                    storage = zpo5)
 zo1 = zpo1
 zo2 = zpo2
 zo3 = zpo3
 zo4 = zpo4
 zo5 = zpo5
-opts_chunk$set(cache=TRUE, message=FALSE, warning = FALSE)
 ```
 
 
@@ -81,10 +82,38 @@ p4 = plot_ordination(zo1, zo_pcoa_list[[4]], color = "Sample_Code", title = "wei
   theme_bw()+stat_ellipse()
 
 ggarrange(p1, p2, p3, p4, ncol = 2, nrow = 2, common.legend = TRUE)
-opts_chunk$set(cache=TRUE, message=FALSE, warning = FALSE)
 ```
 
-```{r zo2}
+```{r ord_setup}
+ord_fun <- function(ps, dist_method) {
+    iDist <- distance(ps, method = dist_method)
+    # Calculate ordination
+    ordinate(ps, method = "PCoA", distance = iDist)
+}
+zvi_ord_bray_list <- zvi_ps_list %>% map(ord_fun, dist_method = "bray")
+zvi_ord_jaccard_list <- zvi_ps_list %>% map(ord_fun, dist_method = "jaccard")
+zvi_ord_wunifrac_list <- zvi_ps_list %>% map(ord_fun, dist_method = "wunifrac")
+zvi_ord_unifrac_list <- zvi_ps_list %>% map(ord_fun, dist_method = "unifrac")
+```
+
+```{r ordPlotallExp}
+pcoa_plot <- function(ord, ps){
+    plot_ordination(ps, ord, color = "Sample_Code") +
+        theme_bw() + 
+        stat_ellipse()
+}
+
+ord_list <- list(zvi_ord_bray_list[[1]], 
+          zvi_ord_jaccard_list[[1]],
+          zvi_ord_unifrac_list[[1]], 
+          zvi_ord_wunifrac_list[[1]]) %>% 
+    map(pcoa_plot, ps = zvi_ps_list[[1]])  
+
+ggarrange(ord_list, ncol = 2, nrow = 2, common.legend = TRUE)
+```
+
+
+```{r }
 # RW and ZW Bray Curtis, Jaccard, Weighted and unweighted unifrac PCOA plots and differences
 
 dist_methods <- unlist(distanceMethodList)[c(1,2,8,10)]
@@ -112,8 +141,6 @@ p4 = plot_ordination(zo2, zo_pcoa_list[[4]], color = "Sample_Code", title = "wei
   theme_bw()+stat_ellipse()
 
 ggarrange(p1, p2, p3, p4, ncol = 2, nrow = 2, common.legend = TRUE)
-
-opts_chunk$set(cache=TRUE, message=FALSE, warning = FALSE)
 ```
 
 
@@ -145,8 +172,6 @@ p4 = plot_ordination(zo3, zo_pcoa_list[[4]], color = "Sample_Code", title = "wei
   theme_bw()+stat_ellipse()
 
 ggarrange(p1, p2, p3, p4, ncol = 2, nrow = 2, common.legend = TRUE)
-
-opts_chunk$set(cache=TRUE, message=FALSE, warning = FALSE)
 ```
 
 ```{r zo4}
@@ -177,11 +202,9 @@ p4 = plot_ordination(zo4, zo_pcoa_list[[4]], color = "Sample_Code", title = "wei
   theme_bw()+stat_ellipse()
 
 ggarrange(p1, p2, p3, p4, ncol = 2, nrow = 2, common.legend = TRUE)
-
-opts_chunk$set(cache=TRUE, message=FALSE, warning = FALSE)
 ```
 
-```{r zo5}
+```{r zo5, fig.cap = "Figure legend"}
 # RW and ZW Bray Curtis, Jaccard, Weighted and unweighted unifrac PCOA plots and differences
 
 dist_methods <- unlist(distanceMethodList)[c(1,2,8,10)]
@@ -209,7 +232,5 @@ p4 = plot_ordination(zo5, zo_pcoa_list[[4]], color = "Sample_Code", title = "wei
   theme_bw()+stat_ellipse()
 
 ggarrange(p1, p2, p3, p4, ncol = 2, nrow = 2, common.legend = TRUE)
-
-opts_chunk$set(cache=TRUE, message=FALSE, warning = FALSE)
 ```
 

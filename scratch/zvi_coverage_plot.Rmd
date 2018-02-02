@@ -14,48 +14,32 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r message=FALSE, warning = FALSE, echo = FALSE}
-library(readr)
-library(tidyr)
-library(dplyr)
-library(stringr)
-library(magrittr)
-library(tibble)
-library(knitr)
-library(devtools)
 library(metagenomeSeq)
-library(phyloseq)
-library(vegan)
-library(broom)
-library(ggplot2)
+library(tidyverse)
 library(iNEXT)
 library(ggExtra)
-library(plotly)
-library(DT)
-library(purrr)
-library(ggfortify)
 opts_chunk$set(cache=TRUE, message=FALSE, warning = FALSE, echo = FALSE)
 ```
 
-```{r}
+```{r calcDivEst}
 # Load mrexperiment object
 zmo = readRDS("mrexp.RDS")
 # Coverage analysis with all samples included using Sample_Code
 div_est <- zmo  %>% MRcounts()  %>% DataInfo()
+```
+
+```{r}
 p <- ggplot(div_est, aes(x = n, y = SC)) +
   geom_point(aes(color = zmo$Sample_Code)) + scale_x_log10() + 
   geom_vline(aes(xintercept = 100), linetype = 2, color = "grey 60") + 
   theme_bw() +
-  labs(x = "Number of Sequences",y = "Coverage") +
+  labs(x = "Number of Sequences",y = "Coverage", color = "Sample Code") +
   theme(legend.position = "bottom")
 ggMarginal(p, type = "histogram", margins = "x")
-opts_chunk$set(cache=TRUE, message=FALSE, warning = FALSE, echo = FALSE)
 ```
 
 ```{r}
-# Load mrexperiment object
-zmo = readRDS("mrexp.RDS")
 # Coverage analysis with all samples included using Sample_Type
-div_est <- zmo  %>% MRcounts()  %>% DataInfo()
 p <- ggplot(div_est, aes(x = n, y = SC)) +
   geom_point(aes(color = zmo$Sample_Type)) + scale_x_log10() + 
   geom_vline(aes(xintercept = 100), linetype = 2, color = "grey 60") + 
@@ -63,6 +47,5 @@ p <- ggplot(div_est, aes(x = n, y = SC)) +
   labs(x = "Number of Sequences",y = "Coverage") +
   theme(legend.position = "bottom")
 ggMarginal(p, type = "histogram", margins = "x")
-opts_chunk$set(cache=TRUE, message=FALSE, warning = FALSE, echo = FALSE)
 ```
 
