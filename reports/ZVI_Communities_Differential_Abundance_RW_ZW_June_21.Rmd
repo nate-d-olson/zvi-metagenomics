@@ -1,0 +1,94 @@
+---
+title: "ZVI Communities Differential Abundance  - Paired"
+author: "Prachi Kulkarni"
+date: "April 2, 2018"
+output: html_document
+---
+
+
+```{r,include=FALSE}
+# Load required packages
+library(knitr)
+library(metagenomeSeq)
+library(tibble)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+opts_chunk$set(root.dir='~/C:/Users/Prachi/Documents/R/zvi-metagenomics')
+```
+
+```{r}
+# Load and display mrexperiment object
+mrexp = readRDS("mrexp.RDS")
+```
+
+
+
+
+```{r}
+### Subset mrexperiment object to only include RW and ZW
+mrexp_zvi <- mrexp[,grepl("RW|ZW",pData(mrexp)$Sample_Code)]
+
+# Filter and normalize
+mrexp_zvi <- aggregateByTaxonomy(mrexp_zvi,
+                                 lvl = "Rank6",
+                                 alternate = TRUE,
+                                 norm = FALSE, log = FALSE)
+mrexp_zvi
+
+pData(mrexp_zvi)$Sample_Code <- factor(pData(mrexp_zvi)$Sample_Code)
+
+
+mrexp_zvi <- filterData(mrexp_zvi,present = floor(dims(mrexp_zvi)[2]/2), depth = 1)
+mrexp_zvi <- cumNorm(mrexp_zvi, p = 0.75)
+s <- normFactors(mrexp_zvi)
+pd <- pData(mrexp_zvi)
+
+settings <- zigControl(maxit = 1, verbose = FALSE)
+mod <- model.matrix(~Sample_Code+Collection_Date+log2(s+1), data = pd)
+res = fitZig(obj <- mrexp_zvi, mod = mod, control = settings,useCSSoffset = FALSE)
+tax = MRtable(res,coef = 2,number=Inf,group=3)
+tax = tax[which(tax$adjPvalues<=0.01),]
+tax = cbind(tax,fData(mrexp_zvi[match(rownames(tax),rownames(mrexp_zvi))]))
+top_feat <- tax %>% rownames()
+```
+
+```{r}
+# Create Differential Abundance Table
+count_tbl <- MRcounts(mrexp_zvi,norm=TRUE,log=TRUE)
+# if you want relative abundances
+#count_tbl <- sweep(count_tbl,2,colSums(count_tbl),"/")
+count_tbl <- count_tbl[rownames(count_tbl) %in% top_feat,]
+count_df <- count_tbl %>% as.data.frame() %>% 
+    rownames_to_column(var = "genus") %>% 
+    gather("Sample_Code", "Count",-genus) %>% left_join(pd)
+count_df <- count_df[,1:3]
+count_df <- cbind(count_df, type = pd[count_df$Sample_Code,c("Sample_Code")],Collection_Date = pd[count_df$Sample_Code,c("Collection_Date")])
+```
+
+```{r}
+# Display Differential Abundance Table
+# Any way to fix the OTU names in the first column?
+kable(tax)
+```
+```{r}
+#tiff('RW_ZW_Rel_Abund.tiff', units="in", width=8, height=6, res=500)
+#ggplot(count_df) + 
+    #geom_boxplot(aes(color=type,y=Count,x=type)) + 
+    #geom_line(aes(x=type, y=Count, group = Collection_Date),color="grey60")+
+    #facet_wrap(~genus, ncol = 5) +
+    #theme_bw() + labs(y = "CSS Normalized Abundance") +
+   #geom_point(aes(color=Collection_Date,x=type,y=Count))
+#dev.off()
+```
+```{r}
+tiff('RW_ZW_Rel_Abund_line.tiff', units="in", width=8, height=6, res=500)
+ggplot(count_df) + 
+    geom_line(aes(x=type, y=Count, group = Collection_Date),color="grey60")+
+    facet_wrap(~genus, ncol = 5) +
+    theme_bw() + labs(y = "CSS Normalized Abundance") +
+   geom_point(aes(color=Collection_Date,x=type,y=Count))
+dev.off()
+```
+
+
