@@ -1,0 +1,102 @@
+---
+title: "ZVI_Metagenomics dataset characterization"
+author: "Prachi Kulkarni"
+date: "June 26, 2018"
+output: html_document
+---
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r message=FALSE, warning = FALSE, echo = FALSE}
+# Load required packages
+library(knitr)
+library(metagenomeSeq)
+library(magrittr)
+library(tibble)
+library(tidyr)
+library(dplyr)
+library(phyloseq)
+library(ggplot2)
+library(iNEXT)
+library(ggExtra)
+opts_chunk$set(cache=TRUE, message=FALSE, warning = FALSE, echo = FALSE)
+```
+
+```{r}
+# Load required datasets
+mrexp = readRDS("mrexp.RDS")
+```
+
+```{r}
+count_dat <- metagenomeSeq::expSummary(mrexp)
+count_dat$Seq_ID <- rownames(count_dat)
+count_tbl <- mrexp@assayData$counts %>% as_tibble()
+count_df <- as.data.frame(count_dat)
+```
+
+```{r}
+count_tbl$OTU <- mrexp@featureData@data$OTU
+count_tbl <- count_tbl %>% gather("sam","count",-OTU) %>% 
+    mutate(count = if_else(count != 0, 1,0)) %>% 
+    group_by(OTU) %>% summarise(n_sam = sum(count)) %>% 
+    filter(n_sam == 1)
+
+#### Getting error message here when when trying to find assigned and unassigned OTUs - "`by` required, because the data sources have no common variables"
+#assigned_un_df <- count_tbl %>% left_join(mrexp@featureData@data) %>% 
+    #mutate(assinged_un = if_else(grepl("OTU_",Taxonomy), "unassigned","assigned")) %>% 
+    #group_by(assinged_un) %>% summarise(count = n())
+```
+
+```{r}
+# total seq count
+count_total <- sum(count_df$libSize)
+# total number of samples
+num_samples <- nrow(count_df)
+
+# average seq count per sample
+avg_seq_sample <- count_total/num_samples
+
+
+## Cant get the following answers due to above error 
+# number of unique assigned species level OTUs
+#n_unique_assigned_otus <- assigned_un_df$count[assigned_un_df$assinged_un == "assigned"]
+# number of unique unassigned species level OTUs
+#n_unique_unassigned_otus <- assigned_un_df$count[assigned_un_df$assinged_un == "unassigned"]
+```
+
+```{r}
+# To Subset the mrexperiment object so as not to include background, soil, lettuce, negative control, ie only water samples
+mrexp1 = mrexp[,!(pData(mrexp)$Sample_Code %in% c("NI","BG","RL", "ZL", "TL", "RS", "ZS", "TS","NR","NC"))]
+```
+
+```{r}
+# Coverage analysis with only water samples described using Sample_Code
+div_est <- mrexp1  %>% MRcounts()  %>% DataInfo()
+p1 <- ggplot(div_est, aes(x = n, y = SC)) +
+  geom_point(aes(color = mrexp1$Sample_Code)) + scale_x_log10() + 
+  geom_vline(aes(xintercept = 100), linetype = 2, color = "grey 60") + 
+  theme_bw() +
+  labs(x = "Number of Sequences",y = "Coverage") +
+  theme(legend.position = "bottom")
+p1$labels$colour <- "Sample Code" # Change Legend Label
+p2 = ggMarginal(p1, type = "histogram", margins = "x")
+#ggsave("Coverage_Plot_with_Sample_Code_April_2_2018.tiff", p2, height = 5, width = 5, dpi = 300)
+```
+
+```{r}
+# Coverage analysis with all samples described using sample type
+div_est <- mrexp  %>% MRcounts()  %>% DataInfo()
+p3 <- ggplot(div_est, aes(x = n, y = SC)) +
+  geom_point(aes(color = mrexp$Sample_Type)) + scale_x_log10() + 
+  geom_vline(aes(xintercept = 100), linetype = 2, color = "grey 60") + 
+  theme_bw() +
+  labs(x = "Number of Sequences",y = "Coverage") +
+  theme(legend.position = "bottom")
+    p3$labels$colour <- "Sample Type" # Change Legend Label
+ggMarginal(p3, type = "histogram", margins = "x")
+p4 = ggMarginal(p3, type = "histogram", margins = "x")
+#ggsave("Coverage_Plot_with_Sample_Type_April_2_2018.tiff", p4, height = 5, width = 5, dpi = 300)
+```
+
