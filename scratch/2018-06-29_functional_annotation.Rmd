@@ -1,0 +1,57 @@
+---
+title: "Shotgun - Functional Annotation Results"
+author: "Nate Olson"
+date: "6/29/2018"
+output: html_document
+---
+
+```{r}
+library(ProjectTemplate)
+load.project()
+```
+
+```{r}
+library(readxl)
+ar_genes <- read_excel("data/raw_data/ar_tox_genes.xlsx", 
+                       sheet = 1, range = "B2:C320") %>% 
+    rename(gene_name = `Relevant genes from ARDB`) %>% 
+    mutate(predicted_gene_name = toupper(gene_name))
+
+ar_gene_upper <- ar_genes$`Relevant genes from ARDB` %>% toupper()
+anno_gene_filt <- funct_anno_df %>% 
+    left_join(ar_genes)
+```
+
+```{r}
+glimpse(anno_gene_filt)
+```
+
+Number of antibiotic genes per sample
+```{r}
+anno_gene_filt_tbl <- anno_gene_filt %>% 
+    filter(!is.na(gene_name)) %>% 
+    # separate(Sample_ID,c("Sample_Code", "Collection_Date", "Sample_Type"), 
+    #          sep = "_",remove = FALSE) %>% 
+    group_by(Antibiotic, gene_name, Sample_ID) %>% 
+    summarise(count = n()) %>% 
+    spread(Sample_ID, count, fill = 0)
+anno_gene_filt_tbl
+    
+```
+
+Looking at Chloramphenicol by sample as an example. 
+Pick chloramphenicol few genes with a good number of observations, basically good for plotting.
+```{r}
+anno_gene_filt %>% 
+    filter(Antibiotic == "Chloramphenicol") %>% 
+    separate(Sample_ID,c("Sample_Code", "Collection_Date", "Sample_Type"), 
+             sep = "_") %>% 
+    # mutate(Collection_Date = as.Date(Collection_Date)) %>% 
+    filter(Sample_Type == "W") %>% 
+    ggplot() + geom_bar(aes(x = Collection_Date, fill = Sample_Code), 
+                        color = "grey20",
+                        position = "dodge") + 
+    facet_wrap(~gene_name, scales = "free_x") + 
+    coord_flip() + theme_bw()
+``` 
+
