@@ -35,6 +35,8 @@ mrexp_zvi <- aggregateByTaxonomy(mrexp_zvi,
                                  alternate = TRUE,
                                  norm = FALSE, log = FALSE)
 mrexp_zvi
+rownames(mrexp_zvi) = sub("OTU_","",rownames(mrexp_zvi))
+rownames(mrexp_zvi) = gsub("g__","",rownames(mrexp_zvi))
 
 pData(mrexp_zvi)$Sample_Code <- factor(pData(mrexp_zvi)$Sample_Code)
 
