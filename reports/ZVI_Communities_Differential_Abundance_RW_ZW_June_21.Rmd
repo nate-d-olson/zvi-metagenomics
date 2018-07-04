@@ -38,6 +38,8 @@ mrexp_zvi
 rownames(mrexp_zvi) = sub("OTU_","",rownames(mrexp_zvi))
 rownames(mrexp_zvi) = gsub("g__","",rownames(mrexp_zvi))
 
+pData(mrexp_zvi)$Collection_Date = as.factor(as.Date(as.character(pData(mrexp_zvi)$Collection_Date),"%m/%d/%Y"))
+
 pData(mrexp_zvi)$Sample_Code <- factor(pData(mrexp_zvi)$Sample_Code)
 
 
