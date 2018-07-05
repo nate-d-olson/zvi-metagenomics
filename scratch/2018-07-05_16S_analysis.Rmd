@@ -1,0 +1,667 @@
+---
+title: "ZVI 16S rRNA data analysis"
+author: "Prachi Kulkarni"
+date: "June 27, 2018"
+output: html_document
+---
+
+Loading project and packages
+```{r message=FALSE, warning = FALSE, echo = FALSE}
+## Loading project
+library(ProjectTemplate)
+load.project()
+# Load required packages
+# source("joe_diversity_functions.R")
+library(knitr)
+library(metagenomeSeq)
+library(iNEXT)
+library(ggExtra)
+library(devtools)
+library(broom)
+library(ggfortify)
+library(ggpubr)
+library(tidyverse)
+library(git2r)
+library(breakaway)
+library(tidyverse)
+library(vegan)
+opts_chunk$set(cache=TRUE, message=FALSE, warning = FALSE, echo = FALSE)
+```
+
+Get sequence count information from mrexperiment object and convert to a dataframe.
+```{r}
+count_dat <- metagenomeSeq::expSummary(mrexp)
+count_dat$Seq_ID <- rownames(count_dat)
+count_tbl <- mrexp@assayData$counts %>% as_tibble()
+count_df <- as.data.frame(count_dat)
+```
+
+Group count table by OTUs
+```{r}
+count_tbl$OTU <- mrexp@featureData@data$OTU
+count_tbl <- count_tbl %>% gather("sam","count",-OTU) %>% 
+    mutate(count = if_else(count != 0, 1,0)) %>% 
+    group_by(OTU) %>% 
+    summarise(n_sam = sum(count)) %>% 
+    filter(n_sam == 1)
+```
+
+```{r}
+count_tbl
+```
+
+All features are assigned to Bacteria or Archaea.
+```{r}
+## Getting the number of OTUs per taxa
+taxa_tbl <- fData(mrexp) %>% as.data.frame() 
+taxa_tbl$Rank1 %>% unique()
+```
+
+Only 2 OTUs are not assigned to the phylum level
+```{r}
+taxa_tbl$Rank2 %>% table()
+```
+
+The two features that are not assigned to the phylumn level are low abundance. 
+No need to worry about filtering them as they are unlikely to affect the results. 
+```{r}
+count_dat <- MRcounts(mrexp, norm = FALSE, log = FALSE, sl = 1)
+count_sum_df <- data_frame(OTUname = rownames(count_dat), total_norm_abu = rowSums(count_dat))
+taxa_tbl %>% left_join(count_sum_df) %>% filter(Rank2 == "p__")
+```
+
+Get total number of sequences, total number of samples and average sequence count per sample.
+```{r}
+# total seq count
+count_total <- sum(count_df$libSize)
+# total number of samples
+num_samples <- nrow(count_df)
+
+# average seq count per sample
+avg_seq_sample <- count_total/num_samples
+summary(count_df$libSize)
+```
+
+To create coverage plot. Two plots - only water samples and all samples
+```{r}
+# To Subset the mrexperiment object so as not to include background, soil, lettuce, negative control, ie only water samples
+control_samples <- c("NI","BG","RL", "ZL", "TL", "RS", "ZS", "TS","NR","NC")
+mrexp1 = mrexp[,!(pData(mrexp)$Sample_Code %in% control_samples)]
+div_est1 <- mrexp1  %>% MRcounts()  %>% DataInfo()
+sample_dat1 <- pData(mrexp1) %>% as.data.frame() %>% 
+    rownames_to_column(var = "site")
+#div_est2 <- left_join(sample_dat1) %>% 
+div_est2 <- left_join(div_est1, sample_dat1, by = c("site"))
+```
+
+Only water samples coverage plot
+Note: marginals don't play nice inside Rmarkdown chunks, not sure why
+```{r}
+# Coverage analysis with only water samples described using Sample_Code
+#div_est <- mrexp1  %>% MRcounts()  %>% DataInfo()
+# pw1 = 
+    ggplot(div_est2, aes(x = n, y = SC)) +
+  geom_point(aes(color = mrexp1$Sample_Code)) + scale_x_log10() + 
+  geom_vline(aes(xintercept = 100), linetype = 2, color = "grey 60") + 
+  theme_bw() +
+  labs(x = "Number of Sequences",y = "Coverage", color = "Sample Code") +
+  theme(legend.position = "bottom")
+    pw1$labels$colour <- "Sample Code" # Change Legend Label
+# ggMarginal(pw1, type = "histogram", margins = "x")
+# pw2 = ggMarginal(pw1, type = "histogram", margins = "x")
+# pw2
+#ggsave("Coverage_Plot_with_Sample_Code_April_2_2018.tiff", p2, height = 5, width = 5, dpi = 300)
+```
+
+
+All samples coverage plot
+```{r}
+# Coverage analysis with all samples described using sample type
+div_est <- mrexp  %>% MRcounts()  %>% DataInfo()
+# pa1 = 
+    ggplot(div_est, aes(x = n, y = SC)) +
+  geom_point(aes(color = mrexp$Sample_Type)) + scale_x_log10() + 
+  geom_vline(aes(xintercept = 100), linetype = 2, color = "grey 60") + 
+  theme_bw() +
+  labs(x = "Number of Sequences",y = "Coverage", color = "Sample Type") +
+  theme(legend.position = "bottom")
+    ## !!!!!!!!!!!!!!!! Can use labs - see above !!!!!!!!!!!!!!!!
+    # pa1$labels$colour <- "Sample Type" # Change Legend Label
+# ggMarginal(pa1, type = "histogram", margins = "x")
+# pa2 = ggMarginal(pa1, type = "histogram", margins = "x")
+# pa2
+#ggsave("Coverage_Plot_with_Sample_Type_April_2_2018.tiff", p4, height = 5, width = 5, dpi = 300)
+```
+
+
+Excluding samples with fewer than "100" counts from mrexperiment object. 100 is just an example here. It may be something different
+```{r phylo_obj}
+
+
+# ### Don't modify source data
+# mrexp_gt100 <- which(colSums(mrexp) > 100) %>% {mrexp[, .]} 
+# ## creating phyloseq object
+# zvi_phy <- mrexp_gt100 %>% MRexperiment2biom(norm = TRUE,log = TRUE) %>% 
+#     import_biom2()
+# colnames(zvi_phy@tax_table) <- c("taxa_OTU","Kingdom",
+#                                    "Phylum","Class","Order",
+#                                    "Family","Genus","Species")
+# zvi_phy@tax_table <- zvi_phy@tax_table[,-2]
+
+## Already have a ps object
+zvi_phy <- phyloseq::prune_samples(sample_sums(ps) > 100, ps)
+
+```
+
+
+Richness Analysis
+```{r}
+meta_df <- read_csv("data/raw_data/zvi_meta.csv")
+richness_df <- richness_df %>% 
+    rename(Sample_ID = sample_id) %>% 
+    right_join(meta_df)
+rw_v_zw <- richness_df %>% filter(Sample_Code %in% c("RW","ZW"))
+```
+
+RW vs ZW Richness figure
+```{r rwZwAlphaPlot, fig.cap = "Comparison of richness estimates between samples collected before and after ZVI filtration, RW and ZW sample types respectively."}
+
+ggplot(rw_v_zw) + 
+    geom_pointrange(aes(x = Sample_Code, y = est, 
+                        ymin = lower, ymax = upper)) +
+    scale_y_log10() + 
+    theme_bw() + facet_wrap(~Collection_Date) + 
+    labs(y = "Richness Estimate", x = "Sample Type")
+```
+
+```{r rwZwAlphaStats}
+# Richness Significance Test
+sample_code <- rw_v_zw$Sample_Code
+
+design_mat <- model.matrix(~ sample_code + 1)
+
+colnames(design_mat) <- colnames(design_mat) %>% str_replace("sample_code","")
+rw_v_zw_betta <- betta_random(chats = rw_v_zw$est, ses = rw_v_zw$seest, 
+                              X = design_mat, groups = rw_v_zw$Collection_Date)
+rw_rich <- rw_v_zw_betta$table[1,1] %>% round(0)
+rw_se <- rw_v_zw_betta$table[1,2] %>% round(0)
+zw_rich <- rw_rich + rw_v_zw_betta$table[2,1] %>% round(0)
+zw_se <- rw_v_zw_betta$table[2,2] %>% round(0)
+p_val <- rw_v_zw_betta$table[2,3]
+rw_v_zw_betta$table
+```
+
+Alpha diversity using the STOTEN Paper code
+How to change "Specnumber" in figure to "Observed OTUs"?
+```{r}
+rwzw_counts <- mrexp %>% MRcounts(norm = TRUE, log = TRUE)
+rwzw_div <- data_frame(Sample_ID = colnames(rwzw_counts),
+                     Shannon = diversity(rwzw_counts, MARGIN = 2),
+                     Simpson = diversity(rwzw_counts, MARGIN = 2, index = "simpson"),
+                     `Observed OTUs` = specnumber(rwzw_counts,MARGIN = 2)) %>% 
+    gather(diversity, metric, -Sample_ID)
+
+rwzw_div_df <- as.data.frame(rwzw_div)
+
+rw_v_zw <- rwzw_div_df %>% 
+    right_join(meta_df) %>%
+filter(Sample_Code %in% c("RW","ZW"))
+
+ggplot(rw_v_zw) + 
+    geom_point(aes(x = Sample_Code, y = metric, color = Collection_Date)) +
+    geom_line(aes(x = Sample_Code, y = metric, group = Collection_Date), 
+              color = "grey60") +
+    theme_bw() + 
+    facet_wrap(~diversity, scale = "free_y") + 
+    labs(y = "Diversity Metric", x = "Sample Type")
+```
+
+Significance Test
+```{r}
+rw_v_zw1 <- rw_v_zw %>% filter(Sample_Code %in% c("RW","ZW")) %>% 
+    group_by(Sample_Code, Collection_Date, diversity) %>% 
+summarize(metric = median(metric)) %>% spread(Sample_Code, metric) %>%
+    filter(!is.na(RW), !is.na(ZW))
+
+rw_v_zw_test_df <- data_frame()
+for (i in c("Shannon","Simpson","Specnumber")) {
+    rw_v_zw_test_df <- rw_v_zw1 %>% 
+        filter(diversity == i) %>% 
+        {t.test(.$RW, .$ZW, paired = TRUE, alternative = "greater")} %>% 
+        tidy() %>% mutate(diversity = i) %>% bind_rows(rw_v_zw_test_df)
+}
+rw_v_zw_test_df %>% select(diversity, estimate, statistic, p.value, parameter, conf.low, conf.high) %>% kable()
+```
+
+Beta Diversity
+```{r}
+# Display the first 5 rows and seven columns of the object
+tax_table(zvi_phy)[1:5, 1:7]
+# Remove cyanobacteria and mitochondria sequences from the dataset
+## Not convinced you need to or should remove all cyanobacteria
+# zvi_phy1 = subset_taxa(zvi_phy, Phylum != "p__Cyanobacteria" & Family != "f__mitochondria")
+zvi_phy1 = subset_taxa(zvi_phy, Rank2 != "p__Cyanobacteria" & Rank5 != "f__mitochondria")
+# Display the first 5 rows and seven columns of the new object
+tax_table(zvi_phy1)[1:5, 1:7]
+#Subset phyloseq object so that only CE, RB, RW and ZW samples are included
+zvi_all = subset_samples(zvi_phy1, Sample_Code %in% 
+                                  c("CE", "RB","RW","ZW","TW"))
+
+# Subset phyloseq object so that only RW, ZW, TW are included
+zvi_rztw <- subset_samples(zvi_phy1, Sample_Code %in% c("RW","ZW","TW"))
+
+# Subset phyloseq object so that only water samples RW and ZW are included
+zvi_rzw <- subset_samples(zvi_phy1, Sample_Code %in% 
+                                  c("RW", "ZW"))
+
+# Subset phyloseq object so that only water samples CE and RB are included
+zvi_cerb <- subset_samples(zvi_phy1, Sample_Code %in% 
+                                  c("CE", "RB"))
+```
+
+```{r}
+any(taxa_sums(zvi_all) == 0)
+ntaxa(zvi_all)
+zvi_all1<- prune_taxa(taxa_sums(zvi_all) > 0, zvi_all)
+any(taxa_sums(zvi_all1) == 0)
+ntaxa(zvi_all1)
+zvi_all2 <- prune_taxa(taxa_sums(zvi_all1) > 1, zvi_all1)
+zvi_all1
+zvi_all2
+
+any(taxa_sums(zvi_rzw) == 0)
+ntaxa(zvi_rztw)
+zvi_rztw1<- prune_taxa(taxa_sums(zvi_rztw) > 0, zvi_rztw)
+any(taxa_sums(zvi_rztw1) == 0)
+ntaxa(zvi_rztw1)
+zvi_rztw2 <- prune_taxa(taxa_sums(zvi_rztw1) > 1, zvi_rztw1)
+zvi_rztw1
+zvi_rztw2
+
+any(taxa_sums(zvi_rzw) == 0)
+ntaxa(zvi_rzw)
+zvi_rzw1<- prune_taxa(taxa_sums(zvi_rzw) > 0, zvi_rzw)
+any(taxa_sums(zvi_rzw1) == 0)
+ntaxa(zvi_rzw1)
+zvi_rzw2 <- prune_taxa(taxa_sums(zvi_rzw1) > 1, zvi_rzw1)
+zvi_rzw1
+zvi_rzw2
+
+any(taxa_sums(zvi_cerb) == 0)
+ntaxa(zvi_cerb)
+zvi_cerb1<- prune_taxa(taxa_sums(zvi_cerb) > 0, zvi_cerb)
+any(taxa_sums(zvi_cerb1) == 0)
+ntaxa(zvi_cerb1)
+zvi_cerb2 <- prune_taxa(taxa_sums(zvi_cerb1) > 1, zvi_cerb1)
+zvi_cerb1
+zvi_cerb2
+```
+
+```{r}
+# CE, RB, RW, ZW and TW Bray Curtis and Jaccard PCOA plots
+
+dist_methods <- unlist(distanceMethodList)[c(8,10)]
+
+zo_pcoa_list <- list()
+for (i in dist_methods) {
+  # Calculate distance matrix
+  iDist <- distance(zvi_all2, method = i)
+  # Calculate ordination
+  zo_pcoa_list[[i]] <- ordinate(zvi_all2, method = "PCoA", distance = iDist)
+}
+
+### Bray Curtis
+p1 = plot_ordination(zvi_all2, zo_pcoa_list[[1]], color= "Sample_Code", title = "Bray Curtis PCoA") + theme_bw()+stat_ellipse()
+p1
+
+#### Jaccard
+p2 = plot_ordination(zvi_all2,zo_pcoa_list[[2]], color= "Sample_Code", title = "Jaccard PCoA") + theme_bw()+stat_ellipse()
+
+ggarrange(p1, p2, ncol = 2, nrow = 1, common.legend = TRUE)
+```
+
+Testing for Differences in RW, ZW, TW, CE and RB
+```{r}
+### Testing for Differences across CE, RB, RW, ZW and TW
+
+iDist <- distance(zvi_all2, method = "bray")
+
+anosim(iDist,grouping = factor(zvi_all2@sam_data$Sample_Code))
+
+
+```
+```{r}
+## betadisper has a post-hoc test
+
+iDist <- distance(zvi_all2, method = "bray")
+
+beta_fit <- betadisper(iDist,group = factor(zvi_all2@sam_data$Sample_Code))
+
+anova(beta_fit) %>% tidy() %>% kable()
+
+
+```
+
+```{r}
+# Pairwise differences
+
+TukeyHSD(beta_fit)$group %>% as.data.frame() %>% 
+  rownames_to_column(var = "comparison") %>% 
+  filter(`p adj` < 0.05) %>% kable(digits = 3)
+
+```
+
+```{r}
+# Now do the same with jaccard
+
+### Testing for Differences across CE, RB, RW, ZW and TW
+
+iDist <- distance(zvi_all2, method = "jaccard")
+
+anosim(iDist,grouping = factor(zvi_all2@sam_data$Sample_Code))
+```
+
+```{r}
+iDist <- distance(zvi_all2, method = "jaccard")
+
+beta_fit <- betadisper(iDist,group = factor(zvi_all2@sam_data$Sample_Code))
+
+anova(beta_fit) %>% tidy() %>% kable()
+```
+
+```{r}
+TukeyHSD(beta_fit)$group %>% as.data.frame() %>% 
+  rownames_to_column(var = "comparison") %>% 
+  filter(`p adj` < 0.05) %>% kable(digits = 3)
+```
+
+
+```{r}
+# RW, ZW and TW Bray Curtis and Jaccard PCOA plots
+
+dist_methods <- unlist(distanceMethodList)[c(8,10)]
+
+zo_pcoa_list <- list()
+for (i in dist_methods) {
+  # Calculate distance matrix
+  iDist <- distance(zvi_rztw2, method = i)
+  # Calculate ordination
+  zo_pcoa_list[[i]] <- ordinate(zvi_rztw2, method = "PCoA", distance = iDist)
+}
+
+### Bray Curtis
+p1 = plot_ordination(zvi_rztw2, zo_pcoa_list[[1]], color= "Sample_Code", title = "Bray Curtis PCoA") + theme_bw()+stat_ellipse()
+p1
+
+#### Jaccard
+p2 = plot_ordination(zvi_rztw2,zo_pcoa_list[[2]], color= "Sample_Code", title = "Jaccard PCoA") + theme_bw()+stat_ellipse()
+
+ggarrange(p1, p2, ncol = 2, nrow = 1, common.legend = TRUE)
+```
+
+
+
+Testing for Differences in RW, ZW and TW
+```{r}
+### Testing for Differences across RW, ZW and TW
+
+iDist <- distance(zvi_rztw2, method = "bray")
+
+anosim(iDist,grouping = factor(zvi_rztw2@sam_data$Sample_Code))
+
+
+```
+```{r}
+## betadisper has a post-hoc test
+
+iDist <- distance(zvi_rztw2, method = "bray")
+
+beta_fit <- betadisper(iDist,group = factor(zvi_rztw2@sam_data$Sample_Code))
+
+anova(beta_fit) %>% tidy() %>% kable()
+
+
+```
+
+```{r}
+# Pairwise differences
+
+TukeyHSD(beta_fit)$group %>% as.data.frame() %>% 
+  rownames_to_column(var = "comparison") %>% 
+  filter(`p adj` < 0.05) %>% kable(digits = 3)
+
+```
+
+```{r}
+# Now do the same with jaccard
+
+### Testing for Differences across CE, RB, RW, ZW and TW
+
+iDist <- distance(zvi_rztw2, method = "jaccard")
+
+anosim(iDist,grouping = factor(zvi_rztw2@sam_data$Sample_Code))
+```
+
+```{r}
+iDist <- distance(zvi_rztw2, method = "jaccard")
+
+beta_fit <- betadisper(iDist,group = factor(zvi_rztw2@sam_data$Sample_Code))
+
+anova(beta_fit) %>% tidy() %>% kable()
+```
+
+```{r}
+# RW and ZW Bray Curtis and Jaccard PCOA plots
+
+dist_methods <- unlist(distanceMethodList)[c(8,10)]
+
+zo_pcoa_list <- list()
+for (i in dist_methods) {
+  # Calculate distance matrix
+  iDist <- distance(zvi_rzw2, method = i)
+  # Calculate ordination
+  zo_pcoa_list[[i]] <- ordinate(zvi_rzw2, method = "PCoA", distance = iDist)
+}
+
+### Bray Curtis
+p1 = plot_ordination(zvi_rzw2, zo_pcoa_list[[1]], color= "Sample_Code", title = "Bray Curtis PCoA") + theme_bw()+stat_ellipse()
+p1
+
+#### Jaccard
+p2 = plot_ordination(zvi_rzw2,zo_pcoa_list[[2]], color= "Sample_Code", title = "Jaccard PCoA") + theme_bw()+stat_ellipse()
+
+ggarrange(p1, p2, ncol = 2, nrow = 1, common.legend = TRUE)
+```
+
+
+
+Testing for Differences in RW and ZW
+```{r}
+### Testing for Differences across RW and ZW
+
+iDist <- distance(zvi_rzw2, method = "bray")
+
+anosim(iDist,grouping = factor(zvi_rzw2@sam_data$Sample_Code))
+```
+
+```{r}
+iDist <- distance(zvi_rzw2, method = "jaccard")
+
+anosim(iDist,grouping = factor(zvi_rzw2@sam_data$Sample_Code))
+```
+
+```{r}
+# CE and RB Bray Curtis and Jaccard PCOA plots
+
+dist_methods <- unlist(distanceMethodList)[c(8,10)]
+
+zo_pcoa_list <- list()
+for (i in dist_methods) {
+  # Calculate distance matrix
+  iDist <- distance(zvi_cerb2, method = i)
+  # Calculate ordination
+  zo_pcoa_list[[i]] <- ordinate(zvi_cerb2, method = "PCoA", distance = iDist)
+}
+
+### Bray Curtis
+p1 = plot_ordination(zvi_cerb2, zo_pcoa_list[[1]], color= "Sample_Code", title = "Bray Curtis PCoA") + theme_bw()+stat_ellipse()
+p1
+
+#### Jaccard
+p2 = plot_ordination(zvi_cerb2,zo_pcoa_list[[2]], color= "Sample_Code", title = "Jaccard PCoA") + theme_bw()+stat_ellipse()
+
+ggarrange(p1, p2, ncol = 2, nrow = 1, common.legend = TRUE)
+```
+
+Testing for Differences in CE and RB
+```{r}
+### Testing for Differences across CE and RB
+
+iDist <- distance(zvi_cerb2, method = "bray")
+
+anosim(iDist,grouping = factor(zvi_cerb2@sam_data$Sample_Code))
+```
+
+```{r}
+### Testing for Differences across CE and RB
+
+iDist <- distance(zvi_cerb2, method = "jaccard")
+
+anosim(iDist,grouping = factor(zvi_cerb2@sam_data$Sample_Code))
+```
+
+Differential Abundance between RW and ZW. 
+
+```{r}
+### Subset mrexperiment object to only include RW and ZW
+mrexp_zvi <- mrexp[,grepl("RW|ZW",pData(mrexp)$Sample_Code)]
+
+## Do not aggregate to genus !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# Filter and normalize
+# mrexp_zvi <- aggregateByTaxonomy(mrexp_zvi,
+#                                  lvl = "Rank6",
+#                                  alternate = TRUE,
+#                                  norm = FALSE, log = FALSE)
+mrexp_zvi
+
+pData(mrexp_zvi)$Sample_Code <- factor(pData(mrexp_zvi)$Sample_Code)
+
+
+mrexp_zvi <- filterData(mrexp_zvi,present = floor(dims(mrexp_zvi)[2]/2), depth = 1)
+mrexp_zvi <- cumNorm(mrexp_zvi, p = 0.75)
+s <- normFactors(mrexp_zvi)
+pd <- pData(mrexp_zvi)
+
+settings <- zigControl(maxit = 1, verbose = FALSE)
+mod <- model.matrix(~Sample_Code+Collection_Date+log2(s+1), data = pd)
+res = fitZig(obj <- mrexp_zvi, mod = mod, control = settings,useCSSoffset = FALSE)
+tax = MRtable(res,coef = 2,number=Inf,group=3)
+tax = tax[which(tax$adjPvalues<=0.01),]
+tax = cbind(tax,fData(mrexp_zvi[match(rownames(tax),rownames(mrexp_zvi))]))
+top_feat <- tax %>% rownames()
+```
+
+
+```{r}
+# Create Differential Abundance Table
+count_tbl <- MRcounts(mrexp_zvi,norm = TRUE,log = TRUE)
+# if you want relative abundances
+#count_tbl <- sweep(count_tbl,2,colSums(count_tbl),"/")
+count_tbl <- count_tbl[rownames(count_tbl) %in% top_feat,]
+count_df <- count_tbl %>% as.data.frame() %>% 
+    rownames_to_column(var = "genus") %>% 
+    gather("Sample_Code", "Count",-genus) %>% left_join(pd)
+count_df <- count_df[,1:3]
+count_df <- cbind(count_df, 
+                  type = pd[count_df$Sample_Code,c("Sample_Code")],
+                  Collection_Date = pd[count_df$Sample_Code,c("Collection_Date")])
+```
+
+```{r}
+# Display Differential Abundance Table
+# Any way to fix the OTU names in the first column?
+kable(tax)
+```
+
+```{r}
+#tiff('RW_ZW_Rel_Abund_line_Jul_5.tiff', units="in", width=8, height=6, res=500)
+ggplot(count_df) + 
+    geom_line(aes(x = type, y = Count, group = Collection_Date), 
+              color = "grey60") +
+    facet_wrap(~genus, ncol = 5) +
+    theme_bw() + labs(y = "CSS Normalized Abundance") +
+   geom_point(aes(color = Collection_Date, x = type, y = Count))+
+    theme(strip.text = element_text(face = "italic", size = 10))
+#dev.off()
+```
+
+
+```{r}
+### Subset mrexperiment object to only include Chlorinated Effluent (CE) and Rain Barrel (RB) samples
+mrexp_zvi1 <- mrexp[,grepl("RB|CE",pData(mrexp)$Sample_Code)]
+
+# Filter and normalize
+mrexp_zvi1 <- aggregateByTaxonomy(mrexp_zvi1,
+                                 lvl = "Rank6",
+                                 alternate = TRUE,
+                                 norm = FALSE, log = FALSE)
+mrexp_zvi1
+
+pData(mrexp_zvi1)$Sample_Code <- factor(pData(mrexp_zvi1)$Sample_Code)
+
+
+mrexp_zvi1 <- filterData(mrexp_zvi1,present = floor(dims(mrexp_zvi1)[2]/2), depth = 1)
+mrexp_zvi1 <- cumNorm(mrexp_zvi1, p = 0.75)
+s <- normFactors(mrexp_zvi1)
+pd <- pData(mrexp_zvi1)
+
+settings <- zigControl(maxit = 1, verbose = FALSE)
+mod <- model.matrix(~Sample_Code+log2(s+1), data = pd)
+res = fitZig(obj <- mrexp_zvi1, mod = mod, control = settings,useCSSoffset = FALSE)
+tax = MRtable(res,coef = 2,number=Inf,group=3)
+tax = tax[which(tax$adjPvalues<=0.01),]
+tax = cbind(tax,fData(mrexp_zvi1[match(rownames(tax),rownames(mrexp_zvi1))]))
+top_feat <- tax %>% rownames()
+```
+
+```{r}
+# Create Differential Abundance Table
+count_tbl <- MRcounts(mrexp_zvi1,norm=TRUE,log=TRUE)
+# if you want relative abundances
+#count_tbl <- sweep(count_tbl,2,colSums(count_tbl),"/")
+count_tbl <- count_tbl[rownames(count_tbl) %in% top_feat,]
+count_df <- count_tbl %>% as.data.frame() %>% 
+    rownames_to_column(var = "genus") %>% 
+    gather("Sample_Code", "Count",-genus) %>% left_join(pd)
+count_df <- count_df[,1:3]
+count_df <- cbind(count_df, type = pd[count_df$Sample_Code,]$Sample_Code)
+```
+
+```{r}
+# Display Differential Abundance Table
+# Any way to fix the OTU names in the first column?
+kable(tax)
+```
+```{r}
+#As a boxplot
+#pdf("eff_rb.pdf",width=4,height=12)
+ggplot(count_df) + 
+    geom_boxplot(aes(color=type,y=Count,x=type)) +  
+    facet_wrap(~genus, ncol = 5) +
+    theme_bw() + labs(y = "CSS Normalized Abundance") +
+    theme(legend.position = "bottom") #+ geom_point(aes(x=type,y=Count))
+
+#As a lineplot
+ggplot(count_df) + 
+  geom_point(aes(color=type,x=type,y=Count))+
+    facet_wrap(~genus, ncol = 5) +
+    theme_bw() + labs(y = "CSS Normalized Abundance") +
+    theme(strip.text =element_text(face = "italic", size = 10))+
+  theme(legend.position = "bottom") #+ geom_point(aes(x=type,y=Count))
+#dev.off()
+```
+
+```{r}
+# Run beta diversity figures with the pre-pruned datasets
+```
+
