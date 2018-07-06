@@ -52,9 +52,17 @@ ps_to_breakaway_df <- function(ps) {
         gather("sample_id", "model")
     
     ## Combine into single data frame
-    list(break_est, break_seest, break_ci, break_model) %>%
+    rich_df <- list(break_est, break_seest, break_ci, break_model) %>%
         Reduce(function(dtf1, dtf2)
             left_join(dtf1, dtf2), .)
+    
+    meta_df <- read_csv("data/raw_data/zvi_meta.csv") %>% 
+        mutate(Collection_Date = lubridate::mdy(Collection_Date))
+    
+    ### Moved to alpha
+    rich_df %>% 
+        dplyr::rename(Sample_ID = sample_id) %>%
+        right_join(meta_df)
     
 }
 
