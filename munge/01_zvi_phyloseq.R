@@ -3,6 +3,7 @@
 
 library(ape)
 library(Biostrings)
+library(lubridate)
 
 ### Source data file names
 biom_file <- "data/raw_data/otu_table_no_pynast_failures.biom"
@@ -14,9 +15,9 @@ metadata_file <- "data/raw_data/zvi_meta.csv"
 ps <- import_biom(biom_file)
 
 ################ Adding metadata to phyloseq object ############################
-meta_df <- read.csv(metadata_file, stringsAsFactors = FALSE) %>% 
-    column_to_rownames(var = "Sample_ID")
-
+meta_df <- read.csv(metadata_file, stringsAsFactors = FALSE) %>%
+    mutate(Collection_Date = mdy(Collection_Date)) %>% 
+    column_to_rownames(var = "Sample_ID") 
 
 ## Reformat biom sample names to match metadata sample names
 sample_names(ps) <- sample_names(ps) %>%
