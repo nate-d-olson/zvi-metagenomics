@@ -1,0 +1,110 @@
+---
+title: "Shotgun - Functional Annotation Results"
+author: "Nate Olson"
+date: "6/29/2018"
+output: html_document
+---
+
+```{r}
+library(ProjectTemplate)
+load.project()
+library(magrittr)
+```
+
+```{r}
+library(readxl)
+ar_genes <- read_excel("data/raw_data/ar_tox_genes.xlsx", 
+                       sheet = 1, range = "B2:C320") %>% 
+    rename(gene_name = `Relevant genes from ARDB`) %>% 
+    mutate(predicted_gene_name = toupper(gene_name))
+
+ar_gene_upper <- ar_genes$`Relevant genes from ARDB` %>% toupper()
+anno_gene_filt <- funct_anno_df %>% 
+    left_join(ar_genes)
+```
+
+```{r}
+glimpse(anno_gene_filt)
+```
+
+Number of antibiotic genes per sample
+```{r}
+anno_gene_filt_tbl <- anno_gene_filt %>% 
+    filter(!is.na(gene_name)) %>% 
+    # separate(Sample_ID,c("Sample_Code", "Collection_Date", "Sample_Type"), 
+    #          sep = "_",remove = FALSE) %>% 
+    group_by(Antibiotic, gene_name, Sample_ID) %>% 
+    summarise(count = n()) %>% 
+    spread(Sample_ID, count, fill = 0)
+anno_gene_filt_tbl
+    
+```
+
+
+
+Looking at Chloramphenicol by sample as an example. 
+Pick chloramphenicol few genes with a good number of observations, basically good for plotting.
+```{r}
+#Separate sample id into its constituent formats for analysis and plotting
+anno_gene_filt %>% 
+    filter(Antibiotic == "Chloramphenicol") %>% 
+    separate(Sample_ID,c("Sample_Code", "Collection_Date", "Sample_Type"), 
+             sep = "_") %>% 
+  
+  # !!!! NEED TO LOOK INTO!!!!
+  #Fix date format
+    # mutate(Collection_Date = as.Date(Collection_Date)) %>% 
+  
+  #Include only water samples
+    filter(Sample_Type == "W") %>% 
+  
+  #Change Sample_Codes to be consistent with 16S analysis
+  mutate(Sample_Code = if_else(Sample_Code == "MAN", "CE", Sample_Code))%>%
+  mutate(Sample_Code = if_else(Sample_Code == "RBC", "RB", Sample_Code))%>%
+  mutate(Sample_Code = if_else(Sample_Code == "TAP", "TW", Sample_Code))%>%
+  mutate(Sample_Code = if_else(Sample_Code == "ZVI", "ZW", Sample_Code))%>%
+  
+  
+# Include only RW and ZW samples
+  filter(Sample_Code == c("RW","ZW")) %>% 
+  
+  # Bar plot of all chloramphenicol gene differences between RW and ZW
+    ggplot() + geom_bar(aes(x = Collection_Date, fill = Sample_Code), 
+                        color = "grey20",
+                        position = "dodge") + 
+    facet_wrap(~gene_name, scales = "free_x") + 
+    coord_flip() + theme_bw()
+
+# !!!!!! NEED to Look into!!!!!
+#Why is ZVI_8-4_W not showing up in any of the datasets or tables or figures?
+#It definitely is in the raw eggnog data
+
+
+# Calculate Significant Differences between RW and ZW (gene by gene)
+# Gene list: blt, ceoa,mdtl,mexe,mexf,oprn
+
+#anno_gene_filt_tbl1 <- anno_gene_filt_tbl[ which(anno_gene_filt_tbl$gene_name=="blt"),]
+#wilcox.test(anno_gene_filt_tbl1$count~anno_gene_filt_tbl1$Sample_Code,paired=TRUE)
+
+  #!!! NEED to look into!!!
+#Error- Unknown or uninitialised column: 'count'.Unknown or uninitialised column: 'Sample_Code'.Error in model.frame.default(formula = anno_gene_filt_tbl1$count ~ anno_gene_filt_tbl1$Sample_Code) : invalid type (NULL) for variable 'anno_gene_filt_tbl1$count'
+
+
+
+# Include only CE and RB samples
+  filter(Sample_Code == c("CE","RB")) %>% 
+  
+  # Bar plot of all chloramphenicol gene differences between RW and ZW
+    ggplot() + geom_bar(aes(x = Collection_Date, fill = Sample_Code), 
+                        color = "grey20",
+                        position = "dodge") + 
+    facet_wrap(~gene_name, scales = "free_x") + 
+    coord_flip() + theme_bw()
+  
+  #!!! NEED to look into!!!
+  # If a bar does not show up for a particular sample, ex. CE 8/2, does that mean that that particular gene was not found in that sample?
+``` 
+
+
+
+
