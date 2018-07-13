@@ -1,0 +1,111 @@
+---
+title: "Isolate Specific Pathogens and compare"
+author: "Prachi Kulkarni"
+date: "July 11, 2018"
+output: html_document
+---
+
+```{r message=FALSE, warning = FALSE, echo = FALSE}
+## Loading project
+library(tidyverse)
+library(ProjectTemplate)
+load.project()
+# Load required packages
+library(knitr)
+library(metagenomeSeq)
+library(iNEXT)
+library(ggExtra)
+library(broom)
+library(ggpubr)
+library(breakaway)
+library(vegan)
+library(magrittr)
+library(phyloseq)
+opts_chunk$set(cache=TRUE, message=FALSE, warning = FALSE)
+```
+
+
+
+```{r r phylo_obj}
+## Excluding samples with < 100 counts from phyloseq object.
+
+zvi_phy <- phyloseq::prune_samples(sample_sums(ps) > 100, ps)
+zvi_phy
+
+#any(taxa_sums(zvi_phy) == 0)
+#ntaxa(zvi_phy)
+
+#zvi_phy <- prune_taxa(taxa_sums(zvi_phy) > 0, zvi_phy)
+#any(taxa_sums(zvi_phy) == 0)
+#ntaxa(zvi_phy)
+#zvi_phy
+
+#zvi_phy <- prune_taxa(taxa_sums(zvi_phy) > 1, zvi_phy)
+#ntaxa(zvi_phy)
+#zvi_phy
+
+#Include only RW and ZW samples
+zvi_rzw <- subset_samples(zvi_phy, Sample_Code %in% c("RW","ZW"))
+zvi_rzw
+
+#Include only a particular pathogen
+zvi_rzw_Path = subset_taxa(zvi_rzw, Rank6 == "g__Mycobacterium")
+zvi_rzw_Path
+tax_table(zvi_rzw_Path)
+otu_table(zvi_rzw_Path)
+
+# Other pathogens                         
+# "g__Listeria","g__Campylobacter","g__Escherichia","g_Salmonella","g__Shigella","g__Yersinia","g__Staphylococcus","g__Vibrio","g__Legionella"
+
+#zvi_rzw_Path = prune_samples(sample_sums(zvi_rzw_Path)>=20, zvi_rzw_Path)
+#zvi_rzw_Path
+
+#Convert "subsetted" Phyloseq object to metagenomeseq object
+mrexp_zvi_Path <- phyloseq_to_metagenomeSeq(zvi_rzw_Path)
+
+#mrexp_zvi_Path <- mrexp_zvi_Path[,grepl("RW|ZW",pData(mrexp_zvi_Path)$Sample_Code)]
+mrexp_zvi_Path
+```
+
+
+
+```{r}
+#Filter and normalize
+pData(mrexp_zvi_Path)$Sample_Code <- factor(pData(mrexp_zvi_Path)$Sample_Code)
+
+
+mrexp_zvi_Path <- filterData(mrexp_zvi_Path,present = floor(dims(mrexp_zvi_Path)[2]/2), depth = 1)
+mrexp_zvi_Path <- cumNorm(mrexp_zvi_Path, p = 0.75)
+s <- normFactors(mrexp_zvi_Path)
+pd <- pData(mrexp_zvi_Path)
+
+settings <- zigControl(maxit = 1, verbose = FALSE)
+#settings = zigControl(maxit = 20, verbose = TRUE)
+mod <- model.matrix(~Sample_Code+Collection_Date+log2(s+1), data = pd)
+res = fitZig(obj <- mrexp_zvi_Path, mod = mod, control = settings,useCSSoffset = FALSE)
+tax = MRtable(res,coef = 2,number = 10,group = 3)
+tax = tax[which(tax$adjPvalues <= 0.01),]
+tax = cbind(tax,fData(mrexp_zvi_Path[match(rownames(tax),rownames(mrexp_zvi_Path))]))
+top_feat <- tax %>% rownames()
+
+# Create Differential Abundance Table RW vs ZW
+count_tbl <- MRcounts(mrexp_zvi_Path,norm = TRUE,log = TRUE)
+# if you want relative abundances
+count_tbl <- count_tbl[rownames(count_tbl) %in% top_feat,]
+count_df <- count_tbl %>% as.data.frame() %>% 
+    rownames_to_column(var = "genus") %>% 
+    gather("Sample_Code", "Count",-genus) %>% left_join(pd)
+count_df <- count_df[,1:3]
+count_df <- cbind(count_df, 
+                  type = pd[count_df$Sample_Code, c("Sample_Code")],
+                  Collection_Date = pd[count_df$Sample_Code, c("Collection_Date")])
+
+#Display differential abundance table
+kable(tax)
+```
+
+
+
+
+
+
