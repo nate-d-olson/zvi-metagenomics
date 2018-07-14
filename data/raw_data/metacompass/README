@@ -1,0 +1,3 @@
+Metacompass results
+Used the following command to transfer files from CBCB cluster 
+rsync -rv --exclude=MD* --exclude=LST*  nolson@cbcbsub00.umiacs.umd.edu:/fs/cbcb-scratch/dnasko/conserve/prachi/mash_results_todd/use1X .
