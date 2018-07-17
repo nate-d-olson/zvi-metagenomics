@@ -1,0 +1,72 @@
+---
+title: "Impact of ZVI on Pathogens"
+author: "Nate Olson"
+date: "7/17/2018"
+output: html_document
+---
+
+```{r message = FALSE, warning = FALSE}
+library(ProjectTemplate)
+load.project()
+```
+
+## Objective
+Evalaute the impact of ZVI filteration on pathogens. 
+Qualitative analysis using shotgun data and quantitative analysis using 16S
+
+
+## Shotgun Metacompass
+Reads were only recruited to pathogens for Manchester samples and none of the RW or ZVI samples
+Note that the sample reads were likely recruited to both E. coli and Salmonella. 
+```{r}
+## removing redundant entries (multiple accessions for same organism)
+asm_id_df %>% 
+    select(Sample_ID, len, reads, org_name) %>% 
+    distinct() %>% 
+    ## filtering by org 
+    filter(str_detect(org_name, "Salmonella enterica|Escherichia coli|Listeria"))
+```
+
+```{r fig.height = 12}
+asm_id_df %>% filter(str_detect(Sample_ID, "RW|ZVI")) %>% 
+    select(Sample_ID, org_name) %>% 
+    distinct() %>% 
+    separate(org_name, c("genus","species","strain"),
+             sep = " ", 
+             remove = FALSE, extra = "merge") %>% 
+    ggplot() + geom_raster(aes(x = Sample_ID, y = paste(genus,species))) 
+```
+
+### Mycobacterium 
+Qualitatively reads are less frequently recruited to the Mycobacteria genera after ZVI filteration than prior to filteration. 
+
+```{r}
+asm_id_df %>% filter(str_detect(Sample_ID, "RW|ZVI")) %>% 
+    select(Sample_ID, org_name) %>% 
+    distinct() %>% 
+    filter(str_detect(org_name, "Myco")) %>% 
+    separate(org_name, c("genus","species","strain"),
+             sep = " ", 
+             remove = FALSE, extra = "merge") %>% 
+    ggplot() + 
+    geom_raster(aes(x = Sample_ID, y = paste(genus,species))) 
+```
+
+Based on For the Mycobacteria genomes with reads the reads per kb is lower than non-Mycobacteria. 
+```{r}
+cov_df <- asm_id_df %>% filter(str_detect(Sample_ID, "RW|ZVI")) %>% 
+    mutate(Myco = if_else(str_detect(org_name, "Myco"), TRUE, FALSE)) %>% 
+    mutate(reads_per_kb = reads/len/1000) %>% 
+    mutate(Sample_Type = if_else(str_detect(Sample_ID, "RW"), "RW", "ZVI"))
+
+ggplot(cov_df) + 
+    geom_boxplot(aes(x = Myco, 
+                     y = reads_per_kb, 
+                     fill = Myco)) + 
+    scale_y_log10() + 
+    facet_wrap(~Sample_Type) + 
+    theme_bw()
+```
+
+## Kraken
+Dan analyzed the samples using Kraken and found low levels of Listeria, Salmonella, and E. coli. See excel file in raw data. 
