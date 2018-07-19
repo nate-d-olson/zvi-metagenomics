@@ -20,7 +20,5 @@ make_funct_anno_df <- function(){
                 .id = "Sample_ID")
 }
 
-funct_anno_df <- make_funct_anno_df()
-
 ## Generate and cache data frame
 ProjectTemplate::cache("funct_anno_df", {make_funct_anno_df()})
