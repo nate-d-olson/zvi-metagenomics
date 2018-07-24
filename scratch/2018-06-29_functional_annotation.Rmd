@@ -10,17 +10,40 @@ library(ProjectTemplate)
 load.project()
 ```
 
+## Filtering antibiotic resistance genes
 ```{r}
 library(readxl)
 ar_genes <- read_excel("data/raw_data/ar_tox_genes.xlsx", 
                        sheet = 1, range = "B2:C320") %>% 
     rename(gene_name = `Relevant genes from ARDB`) %>% 
     mutate(predicted_gene_name = toupper(gene_name))
+```
 
-ar_gene_upper <- ar_genes$`Relevant genes from ARDB` %>% toupper()
-anno_gene_filt <- funct_anno_df %>% 
+Calculating gene ratio - normalizing by proportions
+```{r}
+gene_ratio <- funct_anno_df %>% 
+    group_by(Sample_ID) %>% 
+    mutate(total_count = n()) %>% 
+    group_by(Sample_ID, predicted_gene_name) %>% 
+    mutate(gene_count = n(),
+           gene_prop = gene_count / total_count) %>% 
+    select(Sample_ID, predicted_gene_name, gene_count, total_count, gene_prop) %>% 
+    distinct()
+```
+
+```{r}
+gene_ratio
+```
+
+```{r}
+anno_gene_filt <- gene_ratio %>% 
     left_join(ar_genes)
 ```
+
+```{r}
+anno_gene_filt
+```
+
 
 ```{r}
 glimpse(anno_gene_filt)
@@ -48,10 +71,16 @@ anno_gene_filt %>%
              sep = "_") %>% 
     # mutate(Collection_Date = as.Date(Collection_Date)) %>% 
     filter(Sample_Type == "W") %>% 
-    ggplot() + geom_bar(aes(x = Collection_Date, fill = Sample_Code), 
+    ggplot() + geom_bar(aes(x = Collection_Date, y = gene_prop,
+                            fill = Sample_Code), 
                         color = "grey20",
+                        stat = "identity",
                         position = "dodge") + 
     facet_wrap(~gene_name, scales = "free_x") + 
     coord_flip() + theme_bw()
 ``` 
+
+```{r}
+anno_gene_filt %>% 
+```
 

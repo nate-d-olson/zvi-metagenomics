@@ -9,28 +9,39 @@ output: html_document
 library(ProjectTemplate)
 load.project()
 library(lubridate)
-## Magrittr loaded with tidyverse - which is loaded during the load.project() call 
-# library(magrittr)
+library(readxl)
 ```
 
+calculating proportions
 ```{r}
-library(readxl)
+gene_prop <- funct_anno_df %>% 
+    group_by(Sample_ID) %>% 
+    mutate(total_count = n()) %>% 
+    group_by(Sample_ID, predicted_gene_name) %>% 
+    mutate(gene_count = n(),
+           gene_prop = gene_count / total_count) %>% 
+    select(Sample_ID, predicted_gene_name, gene_count, total_count, gene_prop) %>% 
+    distinct()
+```
+
+
+```{r}
 ar_genes <- read_excel("data/raw_data/ar_tox_genes.xlsx", 
                        sheet = 1, range = "B2:C320") %>% 
-    rename(gene_name = `Relevant genes from ARDB`) %>% 
+    dplyr::rename(gene_name = toupper(`Relevant genes from ARDB`)) %>%
     mutate(predicted_gene_name = toupper(gene_name))
 
-ar_gene_upper <- ar_genes$`Relevant genes from ARDB` %>% toupper()
-anno_gene_filt <- funct_anno_df %>% 
+anno_gene_filt <- gene_prop %>% 
     left_join(ar_genes)
 ```
 
 Cleaning and formatting metadata
 ```{r}
 ar_gene_df <- anno_gene_filt %>% 
-    separate(Sample_ID,c("Sample_Code", "Collection_Date", "Sample_Type"), 
-             sep = "_") %>% 
-  #Fix date format
+    separate(Sample_ID,
+             c("Sample_Code", "Collection_Date", "Sample_Type"), 
+             sep = "_") %>%   
+    #Fix date format
     mutate(Collection_Date = mdy(paste0(Collection_Date,"-2017")))
 
 ## Comparing samples before and after zvi filteration
@@ -41,22 +52,14 @@ ar_rw_zw_df <- ar_gene_df %>%
 ```
 
 
-```{r}
-ar_rw_zw_df
-```
-
-
 Number of antibiotic genes per sample
 ```{r}
-anno_gene_filt_tbl <- anno_gene_filt %>% 
-    filter(!is.na(gene_name)) %>% 
-    # separate(Sample_ID,c("Sample_Code", "Collection_Date", "Sample_Type"), 
-    #          sep = "_",remove = FALSE) %>% 
-    group_by(Antibiotic, gene_name, Sample_ID) %>% 
-    summarise(count = n()) %>% 
-    spread(Sample_ID, count, fill = 0)
-anno_gene_filt_tbl
-    
+## Need to revise for gene proportions
+# anno_gene_filt_tbl <- anno_gene_filt %>% 
+#     filter(!is.na(gene_name)) %>% 
+#     group_by(Antibiotic, gene_name, Sample_ID) %>% 
+#     summarise(count = n()) %>% 
+#     spread(Sample_ID, count, fill = 0)
 ```
 
 
@@ -66,33 +69,16 @@ Looking at Chloramphenicol by sample as an example.
 Pick chloramphenicol few genes with a good number of observations, basically good for plotting.
 ```{r}
 # Bar plot of all chloramphenicol gene differences between RW and ZW
-ar_rw_zw_df %>% filter(Antibiotic == "Chloramphenicol") %>% 
+ar_rw_zw_df %>% #filter(Antibiotic == "Chloramphenicol") %>% 
+    filter(!is.na(gene_name)) %>% 
     ggplot() + 
-    geom_bar(aes(x = as.factor(Collection_Date), 
-                 fill = Sample_Code), 
-             color = "grey20", position = "dodge", width = 0.35) + 
-    facet_wrap(~gene_name, scales = "free_x", nrow = 1) + 
+    geom_point(aes(x = Collection_Date, y = gene_prop, fill = Sample_Code), 
+             stat = "identity", shape = 21, color = "grey20") + 
+    facet_wrap(~gene_name, scales = "free_x") + 
     labs(x = "Collection Date", fill = "Sample_Code") + 
-    theme_bw() + theme(axis.text.x = element_text(angle = -45, hjust = 0))
+    theme_bw() + 
+    theme(axis.text.x = element_text(angle = -45, hjust = 0))
 ``` 
-
-# !!!!!! NEED to Look into!!!!!
-#Why is ZVI_8-4_W not showing up in any of the datasets or tables or figures?
-#It definitely is in the raw eggnog data
-The raw eggnog data file is empty
-
-These are raw counts I am not sure the appropriate was to normalize. 
-We want to use the odds ratio test so we do not have to normalize. 
-
-```{r}
-# Calculate Significant Differences between RW and ZW (gene by gene)
-# Gene list: blt, ceoa,mdtl,mexe,mexf,oprn
-
-#anno_gene_filt_tbl1 <- anno_gene_filt_tbl[ which(anno_gene_filt_tbl$gene_name=="blt"),]
-#wilcox.test(anno_gene_filt_tbl1$count~anno_gene_filt_tbl1$Sample_Code,paired=TRUE)
-#!!! NEED to look into!!!
-#Error- Unknown or uninitialised column: 'count'.Unknown or uninitialised column: 'Sample_Code'.Error in model.frame.default(formula = anno_gene_filt_tbl1$count ~ anno_gene_filt_tbl1$Sample_Code) : invalid type (NULL) for variable 'anno_gene_filt_tbl1$count'
-```
 
 
 ```{r}
@@ -112,11 +98,48 @@ ar_ce_rb_df %>%  filter(Antibiotic == "Chloramphenicol") %>%
     facet_wrap(~gene_name, scales = "free_x", nrow = 1) + 
     labs(x = "Collection Date", fill = "Sample_Code") + 
     theme_bw() + theme(axis.text.x = element_text(angle = -45, hjust = 0))
-  
-  #!!! NEED to look into!!!
-  # If a bar does not show up for a particular sample, ex. CE 8/2, does that mean that that particular gene was not found in that sample?
 ```
 
+
+## Creating an MRexperiment object with function data
+```{r}
+funct_anno_df
+```
+
+```{r}
+wide_fun_counts <- funct_anno_df %>% 
+    ## Sample/ gene counts
+    group_by(Sample_ID, predicted_gene_name) %>% summarize(count = n()) %>% 
+    ## Converting to matrix
+    spread(Sample_ID, count, fill = 0) %>% 
+    mutate(predicted_gene_name = if_else(is.na(predicted_gene_name), 
+                                         "uncategorized", 
+                                         predicted_gene_name))
+fun_mat <- ungroup(wide_fun_counts) %>% 
+    as.data.frame() %>% 
+    column_to_rownames(var = "predicted_gene_name") %>% 
+    as.matrix()
+```
+
+```{r}
+pheno_df <- data_frame(Sample_ID = colnames(fun_mat)) %>% 
+    separate(Sample_ID, 
+             c("Sample_Code", "Collection_Date", "Sample_Type"), 
+             sep = "_", remove = FALSE) %>%   
+    #Fix date format
+    mutate(Collection_Date = mdy(paste0(Collection_Date,"-2017")))
+pd <- as.data.frame(pheno_df)
+rownames(pd) <- pd$Sample_ID    
+```
+
+
+```{r}
+fun_mrexp <- newMRexperiment(fun_mat, phenoData = AnnotatedDataFrame(pd))
+```
+
+```{r}
+fun_mrexp
+```
 
 
 Note citation information from developer
