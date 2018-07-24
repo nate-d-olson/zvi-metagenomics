@@ -1,4 +1,3 @@
-library(tidyverse)
 make_funct_anno_df <- function(){
     ## Get list of annotation files
     annotation_files <- list.files("data/raw_data/eggnog", 
