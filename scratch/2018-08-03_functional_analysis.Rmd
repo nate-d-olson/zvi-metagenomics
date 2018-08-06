@@ -1,0 +1,176 @@
+---
+title: "Shotgun - Functional Annotation Results"
+author: "Nate Olson"
+date: '`r Sys.Date()`'
+output: html_document
+---
+
+```{r message = FALSE}
+library(ProjectTemplate)
+load.project()
+library(metagenomeSeq)
+library(lubridate)
+library(readxl)
+```
+
+## Overview
+Tested for differences in relative abundance for antibiotic resistance genes using metagenomeSeq `fitDO` and `fitZig`. 
+Here relative abundance is the proportion of open reading frames in the metagenome assembly classified as a gene relative to the total number of open reading frames in the assembly. 
+It is a measure of the number of different organisms with the gene and not whether organisms with the gene are more abundant in the different samples
+All genes are differentially abundant when `fitDO` is used and none are differentially abundant when `fitZig` is used. 
+Based on the differential abundance plots at the end of this analysis none of the genes look differentially abundant between RW and ZVI samples. 
+
+## Loading AR Gene LIST
+```{r}
+ar_genes <- read_excel("data/raw_data/ar_tox_genes.xlsx", 
+                       sheet = 1, range = "B2:C320") %>% 
+    dplyr::rename(predicted_gene_name = `Relevant genes from ARDB`) %>%
+    mutate(predicted_gene_name = toupper(predicted_gene_name)) %>% 
+    ## Removing duplitate gene names due to letter case differences
+    distinct()
+```
+
+
+## Odds Ratio Test 
+Testing for differences using Odds Ratio test implemented in metagenomeSeq
+```{r}
+zv_rw_fun_mrexp <- funct_mrexp[,grepl("(ZVI|RW).*_W", sampleNames(funct_mrexp))]
+cl <- pData(zv_rw_fun_mrexp)$Sample_Code
+res <- fitDO(zv_rw_fun_mrexp, cl, norm = TRUE, log = FALSE, cores = 6, p = 1)
+res_df <- rownames_to_column(res, var = "predicted_gene_name")
+```
+
+All significantly different - I don't trust the results
+```{r}
+ar_odds_ratio_df <- ar_genes %>% inner_join(res_df)
+knitr::kable(ar_odds_ratio_df)
+```
+
+
+## Using metagenomeSeq figZig
+```{r}
+zv_rw_fun_mrexp <- funct_mrexp[,grepl("(ZVI|RW).*_W",sampleNames(funct_mrexp))]
+pData(zv_rw_fun_mrexp)$Sample_Code <- factor(pData(zv_rw_fun_mrexp)$Sample_Code)
+
+zv_rw_fun_mrexp <- cumNorm(zv_rw_fun_mrexp, p = 0.75)
+s <- normFactors(zv_rw_fun_mrexp)
+pd <- pData(zv_rw_fun_mrexp)
+
+settings <- zigControl(maxit = 1, verbose = FALSE)
+mod <- model.matrix(~Sample_Code+log2(s+1), data = pd)
+res = fitZig(zv_rw_fun_mrexp, mod = mod, control = settings, useCSSoffset = FALSE)
+funct_stat_tbl <- MRtable(res, coef = 2, number = Inf, group = 3)
+```
+
+Multiple test correction for only antibiotics. 
+None of the antibiotics are differentially abundant. 
+```{r}
+funct_stat_tbl %>% as.data.frame() %>% 
+    rownames_to_column(var = "predicted_gene_name") %>% 
+    right_join(ar_genes) %>% 
+    filter(!is.na(Sample_CodeZVI)) %>% 
+    mutate(adj.p.values = p.adjust(pvalues,"BH")) %>% 
+    dplyr::rename(logFC = Sample_CodeZVI) %>% 
+    select(Antibiotic, predicted_gene_name, logFC, pvalues, adj.p.values) %>% 
+    knitr::kable()
+```
+
+
+## Plotting diferences
+```{r}
+# Create Differential Abundance Table
+count_tbl <- MRcounts(zv_rw_fun_mrexp, norm = FALSE, log = FALSE, sl = 1)
+# if you want relative abundances
+count_tbl <- sweep(count_tbl,2,colSums(count_tbl),"/")
+
+
+count_tbl <- count_tbl[rownames(count_tbl) %in% ar_genes$predicted_gene_name,]
+## removing genes not present in any samples
+count_tbl <- count_tbl[rowSums(count_tbl) != 0,]
+
+## Removing genes only observed in one sample
+pa_tbl <- count_tbl
+pa_tbl[pa_tbl > 0] <- 1
+count_tbl <- count_tbl[rowSums(pa_tbl) > 1,]
+
+count_df <- count_tbl %>% as.data.frame() %>% 
+    rownames_to_column(var = "predicted_gene_name") %>% 
+    gather("Sample_ID", "prop",-predicted_gene_name) %>% left_join(ar_genes)
+
+count_df <- count_df %>% 
+    separate(Sample_ID,
+             c("Sample_Code", "Collection_Date", "Sample_Type"), 
+             sep = "_") %>%   
+    #Fix date format
+    mutate(Collection_Date = mdy(paste0(Collection_Date,"-2017")))
+```
+
+
+```{r}
+ggplot(count_df) + 
+    geom_boxplot(aes(x = Sample_Code, y = prop, color = Sample_Code)) +  
+    facet_wrap(~predicted_gene_name) +
+    theme_bw() + labs(y = "Relative Abundance") +
+    theme(legend.position = "bottom")
+```
+
+Line plots
+```{r}
+count_df %>% filter(!predicted_gene_name %in% c("ACRB", "TOLC")) %>% 
+ggplot() + 
+  geom_point(aes(x = Sample_Code, y = prop, 
+                 color = factor(Collection_Date))) +
+    geom_line(aes(x = as.numeric(as.factor(Sample_Code)), 
+                  y = prop, color = factor(Collection_Date))) +
+    facet_wrap(~predicted_gene_name, ncol = 5) +
+    theme_bw() + labs(y = "Relative Abundance") +
+  theme(legend.position = "bottom") + 
+    labs(color = "Date")
+```
+
+```{r}
+count_df %>% filter(predicted_gene_name %in% c("ACRB", "TOLC")) %>% 
+ggplot() + 
+  geom_point(aes(x = Sample_Code, y = prop, 
+                 color = factor(Collection_Date))) +
+    geom_line(aes(x = as.numeric(as.factor(Sample_Code)), 
+                  y = prop, color = factor(Collection_Date))) +
+    facet_wrap(~predicted_gene_name, ncol = 5) +
+    theme_bw() + labs(y = "Relative Abundance") +
+  theme(legend.position = "bottom") + 
+    labs(color = "Date")
+```
+
+
+
+## Gene names
+Check gene names from spreadsheet against eggnog mapper predicted gene names.
+e.g. is AAC the same as AAC2I in the spreadsheet?
+
+
+## Citation Information
+Note citation information from developer
+
+CITATION:
+If you use this software, please cite:
+
+[1] Fast genome-wide functional annotation through orthology assignment by
+      eggNOG-mapper. Jaime Huerta-Cepas, Kristoffer Forslund, Luis Pedro Coelho,
+      Damian Szklarczyk, Lars Juhl Jensen, Christian von Mering and Peer Bork.
+      Mol Biol Evol (2017). doi: https://doi.org/10.1093/molbev/msx148
+
+[2] eggNOG 4.5: a hierarchical orthology framework with improved functional
+      annotations for eukaryotic, prokaryotic and viral sequences. Jaime
+      Huerta-Cepas, Damian Szklarczyk, Kristoffer Forslund, Helen Cook, Davide
+      Heller, Mathias C. Walter, Thomas Rattei, Daniel R. Mende, Shinichi
+      Sunagawa, Michael Kuhn, Lars Juhl Jensen, Christian von Mering, and Peer
+      Bork. Nucl. Acids Res. (04 January 2016) 44 (D1): D286-D293. doi:
+      https://doi.org/10.1093/nar/gkv1248
+
+[3] Fast and Sensitive Protein Alignment using DIAMOND. Buchfink B, Xie C,
+       Huson DH. 2015. Nat. Methods [Internet] 12.
+
+
+(e.g. Functional annotation was performed using emapper-0.99.2-3-g41823b2 [1]
+ based on eggNOG orthology data [2]. Sequence searches were performed
+ using [3].)
