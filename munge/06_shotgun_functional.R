@@ -1,7 +1,7 @@
 make_funct_anno_df <- function(){
     ## Get list of annotation files
     annotation_files <- list.files("data/raw_data/eggnog", 
-                                   pattern = "annotations$",full.names = TRUE) %>% 
+                                   pattern = "annotations.gz$",full.names = TRUE) %>% 
         set_names(str_extract(., "(?<=eggnog/).*(?=.pep.*)"))
     
     ## Define column names and types (for faster processing)
