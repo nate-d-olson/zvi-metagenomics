@@ -1,0 +1,35 @@
+---
+title: "Breakdown with number of ORFs per sample"
+author: "Nate Olson"
+date: '`r Sys.Date()`'
+output: html_document
+---
+
+```{r}
+library(ProjectTemplate)
+load.project()
+```
+```{r}
+funct_anno_df %>% group_by(Sample_ID) %>% 
+    summarise(count = n()) %>% 
+    separate(Sample_ID, c("Sample_Code",
+                          "Collection_Date",
+                          "Sample_Type"),
+             remove = FALSE,
+             sep = "_") %>% 
+    knitr::kable()
+```
+```{r}
+```{r}
+funct_anno_df %>% group_by(Sample_ID) %>% 
+    summarise(count = n()) %>% 
+    separate(Sample_ID, c("Sample_Code",
+                          "Collection_Date",
+                          "Sample_Type"),
+             remove = FALSE,
+             sep = "_") %>% 
+    filter(Sample_Code %in% c("ZVI","RW"), Sample_Type == "W") %>% 
+    knitr::kable()
+```
+```
+
