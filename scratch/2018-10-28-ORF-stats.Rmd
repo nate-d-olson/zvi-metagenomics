@@ -20,7 +20,6 @@ funct_anno_df %>% group_by(Sample_ID) %>%
     knitr::kable()
 ```
 ```{r}
-```{r}
 funct_anno_df %>% group_by(Sample_ID) %>% 
     summarise(count = n()) %>% 
     separate(Sample_ID, c("Sample_Code",
@@ -28,8 +27,8 @@ funct_anno_df %>% group_by(Sample_ID) %>%
                           "Sample_Type"),
              remove = FALSE,
              sep = "_") %>% 
-    filter(Sample_Code %in% c("ZVI","RW"), Sample_Type == "W") %>% 
+    filter(Sample_Code %in% c("ZVI","RW", "TAP"), Sample_Type == "W") %>% 
     knitr::kable()
 ```
-```
+
 
