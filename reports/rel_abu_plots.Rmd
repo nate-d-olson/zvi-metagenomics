@@ -1,0 +1,73 @@
+---
+title: "ZVI Communities Relative Abundance"
+author: "Nate Olson"
+date: "April 2, 2018"
+output: html_document
+---
+
+
+
+```{r message = FALSE}
+library(ProjectTemplate)
+load.project()
+library(metagenomeSeq)
+library(lubridate)
+library(readxl)
+```
+
+```{r}
+### Subset mrexperiment object to only include RW and ZW
+mrexp_zvi <- mrexp[,grepl("RW|ZW",pData(mrexp)$Sample_Code)]
+
+### Genus level relative abundance
+# Filter and normalize
+mrexp_genus_zvi <- aggregateByTaxonomy(mrexp_zvi,
+                                 lvl = "Rank6",
+                                 alternate = FALSE,
+                                 norm = FALSE, log = FALSE)
+
+mrexp_genus_zvi <- mrexp_genus_zvi[!grepl("no_match",row.names(mrexp_genus_zvi)),]
+mrexp_genus_zvi <- mrexp_genus_zvi[rowSums(mrexp_genus_zvi) != 0,]
+
+```
+
+```{r fig.height = 4}
+mat = MRcounts(mrexp_genus_zvi, norm = TRUE, log = TRUE, sl = 1)
+otusToKeep = which(rowSums(mat) > 0)
+otuStats = apply(mat[otusToKeep, ], 1, median)
+otuIndices = otusToKeep[order(otuStats, decreasing = TRUE)[1:30]]
+mat2 = mat[otuIndices, ]
+gplots::heatmap.2(mat2, Colv = FALSE, trace = "none", margins = c(15,10), keysize = 1)
+```
+
+```{r}
+# Phylum level relative abundanceFilter and normalize
+mrexp_phyla_zvi <- aggregateByTaxonomy(mrexp_zvi,
+                                 lvl = "Rank2",
+                                 alternate = FALSE,
+                                 norm = FALSE, log = FALSE)
+
+# mrexp_phyla_zvi <- mrexp_phyla_zvi[!grepl("no_match",row.names(mrexp_phyla_zvi)),]
+mrexp_phyla_zvi <- mrexp_phyla_zvi[rowSums(mrexp_phyla_zvi) != 0,]
+mat = MRcounts(mrexp_phyla_zvi, norm = TRUE, log = TRUE, sl = 1)
+```
+
+```{r}
+sample_data <- pData(mrexp_phyla_zvi) %>% rownames_to_column(var = "sample_names")
+sample_data
+abundance_data <- as.data.frame(mat) %>% 
+    rownames_to_column(var = "features")
+abu_df <- abundance_data %>% 
+    gather(key = "sample_names", value = "relative_abundance", -"features") %>% 
+    left_join(sample_data)
+```
+
+```{r}
+abu_df %>% 
+    ggplot() + geom_bar(aes(x = Collection_Date, 
+                            y = relative_abundance, fill = features), 
+                        stat = "identity") + 
+    facet_wrap(~Sample_Code) + 
+    theme(legend.position = "bottom")
+```
+
